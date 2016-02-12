@@ -49,7 +49,7 @@ public class Day5Test {
 	}
 
 	private void countNicesFor(String strings, int expected) {
-		Day5 d = new Day5();
+		Day5 d = new Day5(StrategySet.OLDRULES);
 		int actual = d.countNices(strings);
 		assertEquals(expected, actual);
 	}

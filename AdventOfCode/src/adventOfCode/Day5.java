@@ -19,11 +19,11 @@ public class Day5 implements Challenge{
 	}
 	@Override
 	public String part1(String input) {
-		return String.valueOf(countNices(input));
+		return String.valueOf(new Day5(StrategySet.OLDRULES).countNices(input));
 	}
 	@Override
 	public String part2(String input) {
-		return String.valueOf("");
+		return String.valueOf(new Day5(StrategySet.NEWRULES).countNices(input));
 	}
 	
 	public int countNices(String strings) {
@@ -63,10 +63,10 @@ public class Day5 implements Challenge{
 			return true;
 		}),
 		PAIRNOTOVERLAPING( (subject) ->{
-			return true;
+			return false;
 		}),
 		REPEATSWITHONEBETWEEN( (subject) ->{
-			return true;
+			return false;
 		});
 		
 		private Command action;
