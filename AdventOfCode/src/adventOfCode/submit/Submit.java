@@ -11,7 +11,7 @@ public class Submit {
 		while(true){
 			String userChoice = "";
 			for(boolean valid = false;valid==false;){
-				userChoice = JOptionPane.showInputDialog("Enter challenge number");
+				userChoice = JOptionPane.showInputDialog("Enter challenge number (1-25)\nNo number exit application");
 				try{
 					Integer.parseInt(userChoice);
 					valid = true;

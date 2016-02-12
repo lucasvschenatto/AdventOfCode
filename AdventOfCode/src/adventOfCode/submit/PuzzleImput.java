@@ -23,8 +23,6 @@ public class PuzzleImput {
 			try {
 				return Files.readAllLines(Paths.get(path));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				return new ArrayList<String>();
 			}
 			
