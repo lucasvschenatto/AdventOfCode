@@ -6,12 +6,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Day3 {
+public class Day3 implements Challenge{
 
 	public int housesVisited(String directions) {
 		List<String> visited = new ArrayList<String>();		
 		visited.addAll(visit(directions));
 		return countDifferent(visited);
+	}
+	public int housesVisitedWithRobot(String directions) {
+		StringBuilder santas = new StringBuilder(),robots = new StringBuilder();
+		for(int i = 0; i<directions.length();i++){
+			if( (i & 1) == 0)
+				santas.append(directions.charAt(i));
+			else
+				robots.append(directions.charAt(i));
+		}
+		List<String> visited = new ArrayList<String>();		
+		visited.addAll(visit(santas.toString()));
+		visited.addAll(visit(robots.toString()));
+		return countDifferent(visited);		
 	}
 
 	private int countDifferent(List<String> visited) {
@@ -46,19 +59,13 @@ public class Day3 {
 		return visited;
 	}
 
-	public int housesVisitedWithRobot(String directions) {
-		StringBuilder santas = new StringBuilder(),robots = new StringBuilder();
-		for(int i = 0; i<directions.length();i++){
-			if( (i & 1) == 0)
-				santas.append(directions.charAt(i));
-			else
-				robots.append(directions.charAt(i));
-		}
-		List<String> visited = new ArrayList<String>();		
-		visited.addAll(visit(santas.toString()));
-		visited.addAll(visit(robots.toString()));
-		return countDifferent(visited);
-		
+	@Override
+	public String part1(String input) {
+		return String.valueOf(housesVisited(input));
 	}
+	@Override
+	public String part2(String input) {
+		return String.valueOf(housesVisitedWithRobot(input));
+	}	
 }
 

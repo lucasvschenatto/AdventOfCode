@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
-public class Day4 {
+public class Day4 implements Challenge{
 
 	public int numberToGenerateHashWithPrefix(String key, String prefix) {
 		try {
@@ -28,5 +28,14 @@ public class Day4 {
 			prefix = prefix.concat("0");
 		}while(prefix.length()<zeroes);
 		return numberToGenerateHashWithPrefix(key, prefix);
+	}
+	
+	@Override
+	public String part1(String input) {
+		return String.valueOf(numberToGenerateHashStartingWithGivenZeroes(input, 5));
+	}
+	@Override
+	public String part2(String input) {
+		return String.valueOf(numberToGenerateHashStartingWithGivenZeroes(input, 6));
 	}
 }

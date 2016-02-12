@@ -1,6 +1,7 @@
 package adventOfCode;
 
-public class Day2 {
+public class Day2 implements Challenge{
+
 	public int surfacePacks(String packages) {
 		Calculation surface = (h,w,l) ->{
 			int area1 = calculateArea(h,w);
@@ -28,7 +29,7 @@ public class Day2 {
 	}
 	
 	private int forAll(String packages, Calculation calc) {
-		String[] arrayPackages = packages.split("/n");
+		String[] arrayPackages = packages.split("\n");
 		int result = 0;
 		for (String pack : arrayPackages) {
 			pack = pack.trim();
@@ -55,6 +56,15 @@ public class Day2 {
 	}
 	private interface Calculation{
 		int execute(int heigth, int width, int lenght);
+	}
+	
+	@Override
+	public String part1(String input) {
+		return String.valueOf(surfacePacks(input));
+	}
+	@Override
+	public String part2(String input) {
+		return String.valueOf(ribbonPacks(input));
 	}
 }
 

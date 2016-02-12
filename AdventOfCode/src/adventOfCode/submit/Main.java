@@ -1,4 +1,6 @@
-package adventOfCode;
+package adventOfCode.submit;
+
+import adventOfCode.*;
 
 public class Main {
 

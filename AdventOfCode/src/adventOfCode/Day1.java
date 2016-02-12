@@ -1,6 +1,6 @@
 package adventOfCode;
 
-public class Day1 {
+public class Day1 implements Challenge{
 	private int firstUnderground;
 	public Day1(){
 		firstUnderground = 0;
@@ -21,5 +21,12 @@ public class Day1 {
 		goToFloor(commands);
 		return firstUnderground;
 	}
-
+	@Override
+	public String part1(String input) {
+		return String.valueOf(goToFloor(input));
+	}
+	@Override
+	public String part2(String input) {
+		return String.valueOf(whenEnterTheBasement(input));
+	}
 }

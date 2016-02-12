@@ -1,7 +1,14 @@
 package adventOfCode;
 
-public class Day5 {
-
+public class Day5 implements Challenge{
+	@Override
+	public String part1(String input) {
+		return "";
+	}
+	@Override
+	public String part2(String input) {
+		return "";
+	}
 	public int countNices(String strings) {
 		Requirement threeVowels = (s) ->{
 			int vowels = 0;
