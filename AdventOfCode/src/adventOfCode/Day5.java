@@ -1,17 +1,21 @@
 package adventOfCode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
 public class Day5 implements Challenge{
-	List<Strategy> requirements;
+	List<Strategy> properties;
 	public Day5(){
-		requirements = new ArrayList<Strategy>(EnumSet.allOf(Strategy.class));
+		properties = new ArrayList<Strategy>(EnumSet.allOf(Strategy.class));
 	}
-	Day5(Strategy strategy){
-		requirements = new ArrayList<Strategy>();
-		requirements.add(strategy);	
+	Day5(Strategy property){
+		properties = new ArrayList<Strategy>();
+		properties.add(property);	
+	}
+	Day5(StrategySet strategySet){
+		properties = strategySet.getRules();
 	}
 	@Override
 	public String part1(String input) {
@@ -21,36 +25,26 @@ public class Day5 implements Challenge{
 	public String part2(String input) {
 		return String.valueOf("");
 	}
+	
 	public int countNices(String strings) {
-		for (Strategy requirement : requirements) {
-			if (requirement.check(strings) == false)
-				return 0;
-		}
-		return 1;
+		List<String> s = Arrays.asList(strings.split("\n"));
+		int count = 0;
+		for (String string : s) {
+			boolean isNice = true;
+			for (Strategy property : properties)				
+				if (property.check(string) == false)
+					isNice = false;
+			if(isNice)	count++;
+		}		
+		return count;
 	}
 	
 	enum Strategy {
 		THREEVOWELS ( (subject) ->{
 			int vowels = 0;
-			for (int i = 0; i<subject.length();i++){
-				switch (subject.charAt(i)){
-				case 'a':
+			for (int i = 0; i<subject.length();i++)
+				if("aeiou".indexOf(subject.charAt(i)) >= 0)
 					vowels++;
-					break;
-				case 'e':
-					vowels++;
-					break;
-				case 'i':
-					vowels++;
-					break;
-				case 'o':
-					vowels++;
-					break;
-				case 'u':
-					vowels++;
-					break;
-				};
-			}
 			return (vowels>=3)? true:false;
 		}),
 		LETTERTWICE ( (subject) ->{
@@ -63,6 +57,15 @@ public class Day5 implements Challenge{
 			return false;
 		}),
 		REJECTEDSTRING ( (subject) ->{
+			if(subject.contains("ab") || subject.contains("cd")
+			|| subject.contains("pq") || subject.contains("xy"))
+				return false;
+			return true;
+		}),
+		PAIRNOTOVERLAPING( (subject) ->{
+			return true;
+		}),
+		REPEATSWITHONEBETWEEN( (subject) ->{
 			return true;
 		});
 		
@@ -75,6 +78,17 @@ public class Day5 implements Challenge{
 		}
 		private interface Command{
 			boolean check(String subject);
+		}
+	}
+	enum StrategySet{
+		OLDRULES(Arrays.asList(Strategy.THREEVOWELS, Strategy.LETTERTWICE, Strategy.REJECTEDSTRING)),
+		NEWRULES(Arrays.asList(Strategy.PAIRNOTOVERLAPING, Strategy.REPEATSWITHONEBETWEEN));
+		private List<Strategy> rules;
+		StrategySet(List<Strategy> rules){
+			this.rules = rules;
+		}
+		List<Strategy> getRules(){
+			return rules;
 		}
 	}
 }
