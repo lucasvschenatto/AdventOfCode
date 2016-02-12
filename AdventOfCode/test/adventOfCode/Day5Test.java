@@ -20,10 +20,10 @@ public class Day5Test {
 	}
 	@Test
 	public void rejectedString() {		
-		findNaughtyFor("ab", Strategy.REJECTEDSTRING);		
-		findNaughtyFor("cd", Strategy.REJECTEDSTRING);
-		findNaughtyFor("pq", Strategy.REJECTEDSTRING);
-		findNaughtyFor("xy", Strategy.REJECTEDSTRING);
+		findNaughtyFor("ab", Strategy.REJECTEDSUBSTRING);		
+		findNaughtyFor("cd", Strategy.REJECTEDSUBSTRING);
+		findNaughtyFor("pq", Strategy.REJECTEDSUBSTRING);
+		findNaughtyFor("xy", Strategy.REJECTEDSUBSTRING);
 	}
 	@Test
 	public void allProprierties(){

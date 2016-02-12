@@ -56,7 +56,7 @@ public class Day5 implements Challenge{
 			}
 			return false;
 		}),
-		REJECTEDSTRING ( (subject) ->{
+		REJECTEDSUBSTRING ( (subject) ->{
 			if(subject.contains("ab") || subject.contains("cd")
 			|| subject.contains("pq") || subject.contains("xy"))
 				return false;
@@ -81,7 +81,7 @@ public class Day5 implements Challenge{
 		}
 	}
 	enum StrategySet{
-		OLDRULES(Arrays.asList(Strategy.THREEVOWELS, Strategy.LETTERTWICE, Strategy.REJECTEDSTRING)),
+		OLDRULES(Arrays.asList(Strategy.THREEVOWELS, Strategy.LETTERTWICE, Strategy.REJECTEDSUBSTRING)),
 		NEWRULES(Arrays.asList(Strategy.PAIRNOTOVERLAPING, Strategy.REPEATWITHONEBETWEEN));
 		private List<Strategy> rules;
 		StrategySet(List<Strategy> rules){
