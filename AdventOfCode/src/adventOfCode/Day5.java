@@ -65,7 +65,7 @@ public class Day5 implements Challenge{
 		PAIRNOTOVERLAPING( (subject) ->{
 			return false;
 		}),
-		REPEATSWITHONEBETWEEN( (subject) ->{
+		REPEATWITHONEBETWEEN( (subject) ->{
 			return false;
 		});
 		
@@ -82,7 +82,7 @@ public class Day5 implements Challenge{
 	}
 	enum StrategySet{
 		OLDRULES(Arrays.asList(Strategy.THREEVOWELS, Strategy.LETTERTWICE, Strategy.REJECTEDSTRING)),
-		NEWRULES(Arrays.asList(Strategy.PAIRNOTOVERLAPING, Strategy.REPEATSWITHONEBETWEEN));
+		NEWRULES(Arrays.asList(Strategy.PAIRNOTOVERLAPING, Strategy.REPEATWITHONEBETWEEN));
 		private List<Strategy> rules;
 		StrategySet(List<Strategy> rules){
 			this.rules = rules;
