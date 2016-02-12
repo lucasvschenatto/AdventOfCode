@@ -8,47 +8,48 @@ public class Day5Test {
 
 	@Test
 	public void threeVowels() {
-		findNiceFor("aei", Strategy.THREEVOWELS);
-		findNiceFor("xazegov",Strategy.THREEVOWELS);
-		findNiceFor("aeiouaeiouaeiou",Strategy.THREEVOWELS);
+		findNice("aei", Strategy.THREEVOWELS);
+		findNice("xazegov",Strategy.THREEVOWELS);
+		findNice("aeiouaeiouaeiou",Strategy.THREEVOWELS);
 	}
 	@Test
 	public void letterTwice() {		
-		findNiceFor("xx", Strategy.LETTERTWICE);		
-		findNiceFor("dd", Strategy.LETTERTWICE);
-		findNiceFor("aabbccdd", Strategy.LETTERTWICE);
+		findNice("xx", Strategy.LETTERTWICE);		
+		findNice("dd", Strategy.LETTERTWICE);
+		findNice("aabbccdd", Strategy.LETTERTWICE);
 	}
 	@Test
 	public void rejectedString() {		
-		findNaughtyFor("ab", Strategy.REJECTEDSUBSTRING);		
-		findNaughtyFor("cd", Strategy.REJECTEDSUBSTRING);
-		findNaughtyFor("pq", Strategy.REJECTEDSUBSTRING);
-		findNaughtyFor("xy", Strategy.REJECTEDSUBSTRING);
+		findNaughty("ab", Strategy.REJECTEDSUBSTRING);		
+		findNaughty("cd", Strategy.REJECTEDSUBSTRING);
+		findNaughty("pq", Strategy.REJECTEDSUBSTRING);
+		findNaughty("xy", Strategy.REJECTEDSUBSTRING);
 	}
 	@Test
 	public void allProprierties(){
-		countNicesFor("ugknbfddgicrmopn", 1);
-		countNicesFor("aaa", 1);
-		countNicesFor("jchzalrnumimnmhp", 0);
-		countNicesFor("haegwjzuvuyypxyu", 0);
-		countNicesFor("dvszwmarrgswjxmb", 0);
+		exactNices("ugknbfddgicrmopn", 1);
+		exactNices("aaa", 1);
+		exactNices("jchzalrnumimnmhp", 0);
+		exactNices("haegwjzuvuyypxyu", 0);
+		exactNices("dvszwmarrgswjxmb", 0);
 	}
 	@Test
 	public void manyStrings(){
-		countNicesFor("aaa\naeijj", 2);
+		exactNices("aaa\naeijj", 2);
 	}
-	private void findNiceFor(String strings, Strategy strategy) {
+	
+	private void findNice(String strings, Strategy strategy) {
 		Day5 d = new Day5(strategy);
 		int actual = d.countNices(strings);
 		assertEquals(1, actual);		
 	}
-	private void findNaughtyFor(String strings, Strategy strategy) {
+	private void findNaughty(String strings, Strategy strategy) {
 		Day5 d = new Day5(strategy);
 		int actual = d.countNices(strings);
 		assertEquals(0, actual);		
 	}
 
-	private void countNicesFor(String strings, int expected) {
+	private void exactNices(String strings, int expected) {
 		Day5 d = new Day5(StrategySet.OLDRULES);
 		int actual = d.countNices(strings);
 		assertEquals(expected, actual);
