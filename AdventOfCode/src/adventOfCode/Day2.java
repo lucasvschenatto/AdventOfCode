@@ -33,7 +33,7 @@ public class Day2 implements Challenge{
 		int result = 0;
 		for (String pack : arrayPackages) {
 			pack = pack.trim();
-			int[] dimensions = toIntArray(pack);
+			int[] dimensions = (pack.isEmpty())? new int[]{0,0,0} : toIntArray(pack);
 			result += calc.execute(dimensions[0], dimensions[1], dimensions[2]);
 		}
 		return result;
