@@ -1,13 +1,28 @@
 package adventOfCode;
 
-public class Day6 {
+import java.util.Arrays;
+import java.util.List;
 
+import adventOfCode.Day5.StrategySet;
+
+public class Day6 implements Challenge{
 	public int countTurnedOn(String commands) {
 		Grid grid = new Grid(1000,1000);
+		List<String> commandList = Arrays.asList(commands.split("\n"));
+		for (String command : commandList) {
+			String[] token = getTokens(command);
+			Command c = interpret(token[0]);
+			c.execute(grid, token[1],token[2]);
+		}		
+		return grid.countLightsOn();
+	}
+	public int countTurnedOff(String commands) {
+		Grid grid = new Grid(1000,1000);
+		grid.turnAllOn();
 		String[] token = getTokens(commands);
 		Command c = interpret(token[0]);
 		c.execute(grid, token[1],token[2]);
-		return grid.countOnLights();
+		return 1000000 - grid.countLightsOn();
 	}
 	private Command interpret(String instruction){
 		Command c = Command.valueOf(instruction.toUpperCase());
@@ -61,7 +76,12 @@ public class Day6 {
 		Grid(int x, int y){
 			light = new boolean[x][y];
 		}
-		int countOnLights(){
+		public void turnAllOn() {
+			for (int i = 0; i < light.length; i++)
+				for (int j = 0; j < light[i].length; j++)
+					light[i][j] = true;
+		}
+		int countLightsOn(){
 			int count = 0;
 			for (int i = 0; i < light.length; i++)
 				for (int j = 0; j < light[i].length; j++)
@@ -74,10 +94,10 @@ public class Day6 {
 			grid.light[x][y] = true;
 		}),
 		TURN_OFF((grid, x, y)->{
-			return ;
+			grid.light[x][y] = false;
 		}),
 		TOGGLE((grid, x, y)->{
-			return ;
+			grid.light[x][y] = (grid.light[x][y])? false:true;
 		}),
 		DUMMY((grid, x, y)->{});
 		private Action action;
@@ -96,5 +116,13 @@ public class Day6 {
 		interface Action{
 			void execute(Grid grid, int coordinateX, int coordinateY);
 		}
+	}
+	@Override
+	public String part1(String input) {
+		return String.valueOf(new Day6().countTurnedOn(input));
+	}
+	@Override
+	public String part2(String input) {
+		return String.valueOf(new Day6().countTurnedOn(input));
 	}
 }
