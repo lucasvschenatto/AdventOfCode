@@ -48,12 +48,9 @@ public class Day5 implements Challenge{
 			return (vowels>=3)? true:false;
 		}),
 		LETTERTWICE ( (subject) ->{
-			char last = 0;
-			for (int i = 0; i<subject.length();i++){
-				if (subject.charAt(i) == last)
+			for(int i = 0; i < (subject.length()-1); i++)
+				if(subject.charAt(i) == subject.charAt(i+1))
 					return true;
-				last = subject.charAt(i);
-			}
 			return false;
 		}),
 		REJECTEDSUBSTRING ( (subject) ->{
@@ -63,9 +60,17 @@ public class Day5 implements Challenge{
 			return true;
 		}),
 		PAIRNOTOVERLAPING( (subject) ->{
+			for(int i = 0; i < (subject.length()-1); i++){
+				for(int j = i+2; j < subject.length()-1; j++)
+					if(subject.substring(i,i+2).equals(subject.substring(j,j+2)))
+						return true;
+			}
 			return false;
 		}),
 		REPEATWITHONEBETWEEN( (subject) ->{
+			for(int i = 0; i < (subject.length()-2); i++)
+				if(subject.charAt(i) == subject.charAt(i+2))
+					return true;
 			return false;
 		});
 		
