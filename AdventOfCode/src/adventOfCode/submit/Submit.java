@@ -11,12 +11,14 @@ public class Submit {
 		while(true){
 			String userChoice = "";
 			for(boolean valid = false;valid==false;){
-				userChoice = JOptionPane.showInputDialog("Enter challenge number (1-25)\nNot a number exits application");
+				userChoice = JOptionPane.showInputDialog("Enter challenge number (1-25)"
+						+ "\nNot a number exits application");
 				try{
 					Integer.parseInt(userChoice);
 					valid = true;
 				}catch(NumberFormatException e){
-					return;
+					if(userChoice!=null && !userChoice.isEmpty())
+						return;
 				}
 			}			
 			String path = "../AdventOfCode/inputs/day"+userChoice+".txt";
