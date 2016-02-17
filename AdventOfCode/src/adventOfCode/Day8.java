@@ -3,7 +3,7 @@ package adventOfCode;
 import java.util.Arrays;
 import java.util.List;
 
-public class Day8 {
+public class Day8 implements Challenge{
 	Mode code;
 	Mode inMemory;
 	public void spaceOf(String list) {
@@ -17,6 +17,22 @@ public class Day8 {
 
 	public int getInMemorySpace() {
 		return inMemory.getSpace();
+	}
+	public int getSpaceDifference(){
+		return getCodeSpace() - getInMemorySpace();
+	}
+	@Override
+	public String part1(String input) {
+		Day8 d = new Day8();
+		d.spaceOf(input);
+		return String.valueOf(d.getSpaceDifference());
+	}
+
+	@Override
+	public String part2(String input) {
+		Day8 d = new Day8();
+		d.spaceOf(input);
+		return String.valueOf(d.getSpaceDifference());
 	}
 	private abstract class Mode{
 		protected int space;
