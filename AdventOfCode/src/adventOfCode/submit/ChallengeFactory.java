@@ -1,4 +1,7 @@
-package adventOfCode;
+package adventOfCode.submit;
+
+import adventOfCode.*;
+import adventOfCode.NotImplemented;
 
 public class ChallengeFactory {
 	public Challenge create(String dayNumber){
@@ -16,6 +19,7 @@ public class ChallengeFactory {
 		case "6":
 			return new Day6();
 		case "7":
+			return new Day7();
 		case "8":
 		case "9":
 		case "10":
