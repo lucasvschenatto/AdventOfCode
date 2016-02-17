@@ -11,15 +11,6 @@ public class PuzzleImput {
 		this.path = path;
 	}
 	private List<String> getLines() {
-//		File f = new File("../AdventOfCode/inputs/day2.txt");
-//		if (f.isFile()){
-//			FileReader fr = new FileReader("../AdventOfCode/inputs/day2.txt");
-//			BufferedReader b = new BufferedReader(fr);
-//			String line = b.readLine();
-//			System.out.println(line);
-//			b.close();
-//		}
-//		return null;
 			try {
 				return Files.readAllLines(Paths.get(path));
 			} catch (IOException e) {

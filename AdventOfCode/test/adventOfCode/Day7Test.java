@@ -60,6 +60,25 @@ public class Day7Test {
 		signalFor(circuit,"i",65079);
 		signalFor(circuit,"x",123);
 		signalFor(circuit,"y",456);
+	}	
+	@Test
+	public void overrideSignal(){
+		d = Day7.instantiate("123 -> x");
+		int first = d.signalOf("x");
+		assertEquals(123,first);
+		d.overrideSignal("x",9);
+		int second = d.signalOf("x");
+		assertEquals(9,second);
+	}
+	@Test
+	public void eraseSignals(){
+		d = Day7.instantiate("123 -> x");
+		d.overrideSignal("x",9);
+		int first = d.signalOf("x");
+		assertEquals(9,first);
+		d.eraseSignals();
+		int second = d.signalOf("x");
+		assertEquals(123,second);
 	}
 
 	private void signalFor(String circuit, String wire, int expected) {

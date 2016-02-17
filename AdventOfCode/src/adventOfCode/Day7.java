@@ -11,8 +11,11 @@ public class Day7 implements Challenge{
 	}
 	@Override
 	public String part2(String input) {
-//		return String.valueOf(Day7.instantiate(input).signalOf("a"));
-		return "";
+		Day7 d = Day7.instantiate(input);
+		int firstA = d.signalOf("a");
+		d.eraseSignals();
+		d.overrideSignal("b", firstA);
+		return String.valueOf(d.signalOf("a"));
 	}
 	public static final int MASK = (1 << 16) -1;
 	private static Day7 instance;
@@ -49,18 +52,35 @@ public class Day7 implements Challenge{
 		}
 		return 0;
 	}
+	public void overrideSignal(String wire, int signal) {
+		for (Wire w : wires) {
+			if(w.getName().equals(wire))
+				w.setSignal(signal);
+		}
+	}
+	public void eraseSignals(){
+		for (Wire wire : wires) {
+			wire.setSignal(0);
+		}
+	}
 	public class Wire{
 		private Source source;
 		private String name;
+		private int signal;
 		public Wire(String source, String name){
 			this.source = new SourceFactory().create(source);
 			this.name = name;
+		}
+		public void setSignal(int signal) {
+			this.signal = signal;
 		}
 		public String getName() {
 			return name;
 		}
 		public int getSignal() {
-			return source.run();
+			if (signal == 0)
+				 signal = source.run();
+			return signal;
 		}
 	}
 	public class SourceFactory{
@@ -91,10 +111,8 @@ public class Day7 implements Challenge{
 		public int run();
 		default int getValue(String input){
 			try{
-				System.out.println(input);
 				return Integer.valueOf(input);}
 			catch (NumberFormatException e){
-				System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 				for (Wire wire : Day7.getInstance().getWires())
 					if(wire.getName().equals(input))
 						return wire.getSignal();
