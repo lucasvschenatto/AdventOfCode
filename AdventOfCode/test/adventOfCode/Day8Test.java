@@ -66,6 +66,10 @@ public class Day8Test {
 			inMemorySpaceFor("\"z\"\n", 1);
 			inMemorySpaceFor("\"z\"\n\"z\"", 2);
 		}
+		@Test
+		public void manyLines(){
+			fail("Not implemented yet");
+		}
 		private void inMemorySpaceFor(String list, int expected){
 			d = new Day8();
 			d.spaceOf(list);
