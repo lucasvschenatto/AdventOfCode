@@ -3,12 +3,18 @@ package adventOfCode;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.plaf.nimbus.State;
+
+import adventOfCode.day8.*;
+
 public class Day8 implements Challenge{
 	Mode code;
 	Mode inMemory;
 	public void spaceOf(String list) {
 		code = new Code(list);
 		inMemory = new InMemory(list);
+		code.run();
+		inMemory.run();
 	}
 
 	public int getCodeSpace() {
@@ -36,6 +42,8 @@ public class Day8 implements Challenge{
 	}
 	private abstract class Mode{
 		protected int space;
+		protected String list;
+		public abstract void run();
 		private int getSpace(){
 			return space;
 		}
@@ -45,13 +53,26 @@ public class Day8 implements Challenge{
 	}
 	private class Code extends Mode{
 		Code(String list){
-			space = list.length();
+			this.list = list;
+		}
+		@Override
+		public void run() {
+			this.space = list.length();
+			
 		}
 	}
 	private class InMemory extends Mode{
 		InMemory(String list){
-			String local = list.replace("\"","");
-			space = local.length();
+			this.list = list;
+		}
+
+		@Override
+		public void run() {
+			StateContext context = new StateContext();
+			for (char c : list.toCharArray()) {
+				context.readChar(c);
+			}
+			space = context.getCount();
 		}
 	}
 }
