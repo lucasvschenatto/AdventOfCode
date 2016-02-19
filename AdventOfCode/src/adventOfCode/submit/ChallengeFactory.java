@@ -2,9 +2,6 @@ package adventOfCode.submit;
 
 import java.lang.reflect.InvocationTargetException;
 
-import adventOfCode.*;
-import adventOfCode.day8.NotImplemented;
-
 public class ChallengeFactory {
 	public Challenge create(String dayNumber){
 			try {

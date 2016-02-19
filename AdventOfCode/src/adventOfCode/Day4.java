@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
+import adventOfCode.submit.Challenge;
+
 public class Day4 implements Challenge{
 
 	public int numberToGenerateHashWithPrefix(String key, String prefix) {

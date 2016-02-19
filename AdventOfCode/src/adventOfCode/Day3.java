@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import adventOfCode.submit.Challenge;
+
 public class Day3 implements Challenge{
 
 	public int housesVisited(String directions) {

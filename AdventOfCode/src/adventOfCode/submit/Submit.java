@@ -1,15 +1,12 @@
 package adventOfCode.submit;
 
-
 import javax.swing.JOptionPane;
-
-import adventOfCode.*;
 
 public class Submit {
 
 	public static void main(String[] args) throws Exception {
 		while(true){
-			String userChoice = "";
+			String userChoice = null;
 			for(boolean valid = false;valid==false;){
 				userChoice = JOptionPane.showInputDialog("Enter challenge number (1-25)"
 						+ "\nNot a number exits application");

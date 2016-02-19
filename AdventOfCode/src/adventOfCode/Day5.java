@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import adventOfCode.day5.*;
+import adventOfCode.submit.Challenge;
 
 public class Day5 implements Challenge{
 	List<Strategy> properties;

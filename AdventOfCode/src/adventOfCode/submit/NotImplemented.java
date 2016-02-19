@@ -1,6 +1,4 @@
-package adventOfCode.day8;
-
-import adventOfCode.Challenge;
+package adventOfCode.submit;
 
 public class NotImplemented implements Challenge {
 	private String message = "Not Implemented Challenge";

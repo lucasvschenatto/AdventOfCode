@@ -1,7 +1,7 @@
 package adventOfCode;
 
 import static org.junit.Assert.*;
-import adventOfCode.Day5.*;
+import adventOfCode.day5.*;
 import org.junit.*;
 
 public class Day5Test {

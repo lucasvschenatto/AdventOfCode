@@ -3,6 +3,7 @@ package adventOfCode;
 import java.util.Arrays;
 import java.util.List;
 import adventOfCode.day6.*;
+import adventOfCode.submit.Challenge;
 
 public class Day6 implements Challenge {
 	private Grid grid;

@@ -1,5 +1,7 @@
 package adventOfCode;
 
+import adventOfCode.submit.Challenge;
+
 public class Day1 implements Challenge{
 	private int firstUnderground;
 	public Day1(){

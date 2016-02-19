@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import adventOfCode.day7.*;
+import adventOfCode.submit.Challenge;
 
 public class Day7 implements Challenge{
 

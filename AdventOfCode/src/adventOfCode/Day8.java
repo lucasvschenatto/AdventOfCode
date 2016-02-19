@@ -1,6 +1,7 @@
 package adventOfCode;
 
 import adventOfCode.day8.*;
+import adventOfCode.submit.Challenge;
 
 public class Day8 implements Challenge{
 	Mode code;

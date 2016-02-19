@@ -1,5 +1,7 @@
 package adventOfCode;
 
+import adventOfCode.submit.Challenge;
+
 public class Day2 implements Challenge{
 
 	public int surfacePacks(String packages) {
