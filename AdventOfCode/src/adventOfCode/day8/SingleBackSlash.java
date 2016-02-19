@@ -1,10 +1,11 @@
 package adventOfCode.day8;
 
-public class SingleBackSlash implements InMemoryStringState {
+public class SingleBackSlash implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		context.increaseCount();
+		context.increaseInMemoryCount();
+		context.increaseEncodedCount(2);
 		switch (c){
 		case '\"':
 			context.setState(new FinishingDoubleQuote());

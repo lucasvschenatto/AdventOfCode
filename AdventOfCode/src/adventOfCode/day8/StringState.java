@@ -1,5 +1,5 @@
 package adventOfCode.day8;
 
-public interface InMemoryStringState {
+public interface StringState {
 	void readChar(StateContext context,char c);
 }

@@ -1,13 +1,20 @@
 package adventOfCode.day8;
 
-public class FinishingDoubleQuote implements InMemoryStringState {
+public class FinishingDoubleQuote implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		if (c == '\n')
+		context.increaseEncodedCount(3);
+		switch (c){
+		case '\n':
 			context.setState(new NewLine());
-		else
-			context.setState(new NotExpectedChar(this,c));
+			break;
+		case '\u0000':
+			context.setState(new Finished());
+			break;
+		default:
+		context.setState(new NotExpectedChar(this,c));
+		}
 	}
 
 }

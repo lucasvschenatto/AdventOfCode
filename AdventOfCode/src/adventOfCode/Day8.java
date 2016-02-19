@@ -1,20 +1,18 @@
 package adventOfCode;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.plaf.nimbus.State;
-
 import adventOfCode.day8.*;
 
 public class Day8 implements Challenge{
 	Mode code;
 	Mode inMemory;
+	Mode enCoded;
 	public void spaceOf(String list) {
 		code = new Code(list);
 		inMemory = new InMemory(list);
+		enCoded = new Encoded(list);
 		code.run();
 		inMemory.run();
+		enCoded.run();
 	}
 
 	public int getCodeSpace() {
@@ -24,55 +22,66 @@ public class Day8 implements Challenge{
 	public int getInMemorySpace() {
 		return inMemory.getSpace();
 	}
-	public int getSpaceDifference(){
+	public int getEncodedSpace() {
+		return enCoded.getSpace();
+	}
+	public int getInMemoryDifference(){
 		return getCodeSpace() - getInMemorySpace();
+	}
+	public int getEncodedDifference() {
+		return getEncodedSpace() - getCodeSpace();
 	}
 	@Override
 	public String part1(String input) {
 		Day8 d = new Day8();
 		d.spaceOf(input);
-		return String.valueOf(d.getSpaceDifference());
+		return String.valueOf(d.getInMemoryDifference());
 	}
 
 	@Override
 	public String part2(String input) {
 		Day8 d = new Day8();
 		d.spaceOf(input);
-		return String.valueOf(d.getSpaceDifference());
+		return String.valueOf(d.getEncodedDifference());
 	}
-	private abstract class Mode{
+	private static class Mode{
+		protected StateContext context;
 		protected int space;
 		protected String list;
-		public abstract void run();
-		private int getSpace(){
+		protected Action action;
+		final void run(){
+			context = new StateContext();
+			for (char c : list.toCharArray()) {
+				context.readChar(c);
+			}
+			action.execute();
+		}
+		int getSpace(){
 			return space;
 		}
-		protected List<String>getLines(String list){
-			return Arrays.asList(list.split("\n"));
+		private interface Action{
+			public void execute();
 		}
 	}
 	private class Code extends Mode{
 		Code(String list){
 			this.list = list;
-		}
-		@Override
-		public void run() {
-			this.space = list.length();
-			
+			action = () -> space = list.replace("\n", "").length();
 		}
 	}
 	private class InMemory extends Mode{
 		InMemory(String list){
 			this.list = list;
+			action = () -> space = context.getInMemoryCount();
 		}
-
-		@Override
-		public void run() {
-			StateContext context = new StateContext();
-			for (char c : list.toCharArray()) {
-				context.readChar(c);
-			}
-			space = context.getCount();
+	}
+	private class Encoded extends Mode{
+		Encoded(String list){
+			this.list = list;
+			action = () ->{
+				context.readChar('\u0000');
+				space = context.getEncodedCount();
+			};
 		}
 	}
 }

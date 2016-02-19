@@ -1,10 +1,11 @@
 package adventOfCode.day8;
 
-public class SecondHexa implements InMemoryStringState {
+public class SecondHexa implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		context.increaseCount();
+		context.increaseInMemoryCount();
+		context.increaseEncodedCount(1);
 		switch (c){
 		case '\"':
 			context.setState(new FinishingDoubleQuote());

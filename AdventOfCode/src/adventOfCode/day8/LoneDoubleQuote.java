@@ -1,10 +1,11 @@
 package adventOfCode.day8;
 
-public class LoneDoubleQuote implements InMemoryStringState {
+public class LoneDoubleQuote implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		context.increaseCount();
+		context.increaseInMemoryCount();
+		context.increaseEncodedCount(2);
 		switch (c){
 		case '\"':
 			context.setState(new FinishingDoubleQuote());

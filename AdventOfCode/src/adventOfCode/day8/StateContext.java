@@ -1,19 +1,26 @@
 package adventOfCode.day8;
 
 public class StateContext {
-	private InMemoryStringState current;
-	private int count;
+	private StringState current;
+	private int inMemoryCount;
+	private int encodedCount;
 	public StateContext(){
 		setState(new Started());
 	}
-	void setState(final InMemoryStringState newState){
+	void setState(final StringState newState){
 		current = newState;
 	}
-	void increaseCount(){
-		count++;
+	void increaseInMemoryCount(){
+		inMemoryCount++;
 	}
-	public int getCount(){
-		return count;
+	public int getInMemoryCount(){
+		return inMemoryCount;
+	}
+	void increaseEncodedCount(int increase){
+		encodedCount += increase;
+	}
+	public int getEncodedCount() {
+		return encodedCount;
 	}
 	public void readChar(final char c){
 		current.readChar(this,c);

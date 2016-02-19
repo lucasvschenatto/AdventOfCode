@@ -1,9 +1,10 @@
 package adventOfCode.day8;
 
-public class StartingDoubleQuote implements InMemoryStringState {
+public class StartingDoubleQuote implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
+		context.increaseEncodedCount(3);
 		switch (c){
 		case '\"':
 			context.setState(new FinishingDoubleQuote());

@@ -1,13 +1,19 @@
 package adventOfCode.day8;
 
-public class NewLine implements InMemoryStringState {
+public class NewLine implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		if (c == '\"')
+		switch (c){
+		case '\"':
 			context.setState(new StartingDoubleQuote());
-		else
+			break;
+		case '\u0000':
+			context.setState(new Finished());
+			break;
+		default:
 			context.setState(new NotExpectedChar(this,c));
+		}
 	}
 
 }

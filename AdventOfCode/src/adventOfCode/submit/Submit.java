@@ -17,7 +17,7 @@ public class Submit {
 					Integer.parseInt(userChoice);
 					valid = true;
 				}catch(NumberFormatException e){
-					if(userChoice==null)
+					if(userChoice == null || !userChoice.isEmpty())
 						return;
 				}
 			}			

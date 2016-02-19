@@ -1,10 +1,11 @@
 package adventOfCode.day8;
 
-public class Letter implements InMemoryStringState {
+public class Letter implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
-		context.increaseCount();
+		context.increaseInMemoryCount();
+		context.increaseEncodedCount(1);
 		switch (c){
 		case '\"':
 			context.setState(new FinishingDoubleQuote());

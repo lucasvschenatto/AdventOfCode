@@ -1,9 +1,10 @@
 package adventOfCode.day8;
 
-public class Scape implements InMemoryStringState {
+public class Scape implements StringState {
 
 	@Override
 	public void readChar(StateContext context, char c) {
+		context.increaseEncodedCount(2);
 		switch (c){
 		case 'x':
 			context.setState(new ASCIICode());
