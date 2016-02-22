@@ -24,25 +24,35 @@ public class Day9 implements Challenge{
 		List<String> routes = new ArrayList<String>();
 		mountRoutes(cities, new ArrayList<String>(), routes);
 		List<Distance> distances = readDistances(input);
-		// need to change this below method's first loop
-		int i = routeDistancesFor(routes,distances);
-		return 0;
+		List<Integer> routeDistances = routeDistancesFor(routes,distances);
+		return findShortest(routeDistances);
 	}
-	private int routeDistancesFor(List<String> routes, List<Distance> distances) {
-		int d = 0;
+	private int findShortest(List<Integer> routeDistances) {
+		Integer shortest = Integer.MAX_VALUE;
+		for (Integer current : routeDistances) {
+			if(current < shortest)
+				shortest = current;
+		}
+		return shortest.intValue();
+	}
+	private List<Integer> routeDistancesFor(List<String> routes, List<Distance> distances) {
+		List<Integer> routeDistances = new ArrayList<Integer>();
 		for (String route : routes) {
+			int current = 0;
 			String[] cities = route.split(" ");
 			for(int i = 0; i<(cities.length-1);i++){
 				for (Distance distance : distances) {
-					if(distance.cityA == cities[i] || distance.cityB == cities[i]){
-						if(distance.cityA == cities[i+1] || distance.cityB == cities[i+1]){
-							d = distance.distance;
+					if(distance.cityA.equals(cities[i]) || distance.cityB.equals(cities[i]) )
+						if(distance.cityA.equals(cities[i+1])
+								|| distance.cityB.equals(cities[i+1]) ){
+							current = current + distance.distance;
+							break;
 						}
-					}
 				}
 			}
+			routeDistances.add(Integer.valueOf(current));
 		}
-		return d;
+		return routeDistances;
 	}
 	private void mountRoutes(List<String> citiesToRoute,List<String> citiesRouted, List<String> routes) {
 		if(citiesToRoute.size()>0){
