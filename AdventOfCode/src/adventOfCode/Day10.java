@@ -13,7 +13,7 @@ public class Day10 implements Challenge{
 	}
 
 	private String lookAndSay(String sequence) {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		for(int i = 0; i<sequence.length();){
 			char current = sequence.charAt(i);
 			int count = 0;
@@ -21,21 +21,21 @@ public class Day10 implements Challenge{
 					count++;
 					i++;
 				}
-			result = result.concat(count+ String.valueOf(current));
+			result.append(count+ String.valueOf(current));
 		}
-		return result;		
+		return result.toString();	
 	}
 
 	@Override
 	public String part1(String input) {
 		String result = lookAndSayTurns(input, 40);
-		return result;
+		return String.valueOf(result.length());
 	}
 
 	@Override
 	public String part2(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		String result = lookAndSayTurns(input, 50);
+		return String.valueOf(result.length());
 	}
 
 }
