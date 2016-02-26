@@ -17,13 +17,13 @@ public class Submit {
 					if(userChoice == null || !userChoice.isEmpty())
 						return;
 				}
-			}			
+			}
 			String path = "../AdventOfCode/inputs/day"+userChoice+".txt";
 			String input = new PuzzleImput(path).getInOneLine();
 			Challenge day = new ChallengeFactory().create(userChoice);
 			String answer = "Part1: "+day.part1(input)+"\nPart2: "+ day.part2(input);
 			JOptionPane.showMessageDialog(null, answer);
-		}		
+		}
 	}
 
 }
