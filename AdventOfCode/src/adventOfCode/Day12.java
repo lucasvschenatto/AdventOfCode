@@ -1,6 +1,7 @@
 package adventOfCode;
 
 import adventOfCode.submit.Challenge;
+import adventOfCode.day12.*;
 
 public class Day12 implements Challenge {
 	private final String NUMBERS = "[[\\W]&&[^-]]";
@@ -19,7 +20,7 @@ public class Day12 implements Challenge {
 		return sumAllOf(jSON, NUMBERS);
 	}
 	public int sumAllNonReds(String jSON){
-		return sumAllOf(jSON, NONREDS);
+		return new Json().sumAll(jSON);
 	}
 	public int sumAllOf(String jSON, String regex) {
 		int sum = 0;
