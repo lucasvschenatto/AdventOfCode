@@ -4,7 +4,7 @@ import adventOfCode.submit.Challenge;
 
 public class Day12 implements Challenge {
 	private final String NUMBERS = "[[\\W]&&[^-]]";
-	private final String NONREDS = "[[\\W]&&[^-]|[{.*\"red\".*}]";
+	private final String NONREDS = "\\{.*\\\"red\\\".*\\}|[[\\W]&&[^-]]";
 	@Override
 	public String part1(String input) {
 		String result = String.valueOf(sumAllNumbers(input));
