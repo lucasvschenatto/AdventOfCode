@@ -1,15 +1,22 @@
 package adventOfCode.day12;
 
-public class Value implements Element {
-	@Override
-	public int sumAll(Context c) throws RedValueException {
-		if(c.jSON.charAt(c.pos)=='[')
-			return new JArray().sumAll(c);
+public abstract class Value{
+
+	public static int sumAll(Context c) throws RedValueException {
+		if(c.jSON.charAt(c.pos)=='['){
+			c.pos++;
+			return JArray.sumAll(c);
+		}
 		else if(c.jSON.charAt(c.pos)=='{')
-			return new JObject().sumAll(c);
-		else if (c.jSON.charAt(c.pos)=='"')
-			return new JString().sumAll(c);
+		{
+			c.pos++;
+			return JObject.sumAll(c);
+		}
+		else if (c.jSON.charAt(c.pos)=='"'){
+			c.pos++;
+			return JString.sumAll(c);
+		}
 		else
-			return new JNumber().sumAll(c);
+			return JNumber.sumAll(c);
 	}
 }

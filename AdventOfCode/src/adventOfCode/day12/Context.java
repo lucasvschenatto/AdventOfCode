@@ -2,9 +2,11 @@ package adventOfCode.day12;
 
 public class Context {
 	String jSON;
+	boolean nonReds;
 	int pos;
-	Context(String jSON, int position){
+	Context(String jSON, boolean nonReds){
 		this.jSON = jSON;
-		this.pos = position;
+		this.pos = 0;
+		this.nonReds = nonReds;
 	}
 }

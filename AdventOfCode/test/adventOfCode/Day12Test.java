@@ -31,14 +31,7 @@ public class Day12Test {
 		sumNonRedsFor("[1,\"red\",5]",6);
 		sumNonRedsFor("[1,{\"c\":\"red\",\"b\":2},-3]",-2);
 	}
-	@Test
-	public void understandRegex(){
-		String sentence = "{[[1,2,3],[1,{\"c\":\"red\",\"b\":2},-33]]}";
-		String regex = "\\{.*&&[^\\}]\\\"red\\\".*\\}{1}|[[\\W]&&[^-]]";
-		for(String s: sentence.split(regex)){
-			System.out.println(s);
-		}
-	}
+	
 	private void sumNonRedsFor(String jSON, int expected) {
 		Day12 d = new Day12();
 		int actual = d.sumAllNonReds(jSON);

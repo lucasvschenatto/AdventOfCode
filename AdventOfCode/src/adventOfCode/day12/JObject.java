@@ -1,22 +1,20 @@
 package adventOfCode.day12;
 
-public class JObject implements Element {
-
-	@Override
-	public int sumAll(Context c) {
+public abstract class JObject{
+	public static int sumAll(Context c) {
 		int sum = 0;
-		boolean isRed = false;
+		boolean discard = false;
 		while(c.jSON.charAt(c.pos)!='}'){
 			if(c.jSON.charAt(c.pos) == ',')
 				c.pos++;
 			try {
-				sum += new Property().sumAll(c);
-			} catch (RedValueException e) {
-				isRed = true;
-				}
+				sum += Property.sumAll(c);
+			}catch (RedValueException e){
+				if(c.nonReds)
+					discard = true;}
 		}
 		c.pos++;
-		return (isRed)? 0:sum;
+		return (discard)? 0:sum;
 	}
 
 }

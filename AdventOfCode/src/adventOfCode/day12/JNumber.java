@@ -1,10 +1,11 @@
 package adventOfCode.day12;
 
-public class JNumber implements Element {
+public class JNumber{
 
-	@Override
-	public int sumAll(Context c) {
+	public static int sumAll(Context c) {
 		int start = c.pos;
+		if(c.jSON.charAt(c.pos)=='-')
+			c.pos++;
 		while(Character.isDigit(c.jSON.charAt(c.pos))){
 			c.pos++;
 		}
