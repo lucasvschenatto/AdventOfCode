@@ -17,12 +17,6 @@ public class Route {
 		routes = allPossibleRoutes(cities);		
 		routeDistances = routeDistancesFor(routes,cityDistances);
 	}
-	private List<String> allPossibleRoutes(List<String> cities){
-		List<String> allRoutes = new ArrayList<String>();
-		List<String> usedCities = new ArrayList<String>(); 
-		mountRoutes(cities, usedCities, allRoutes);
-		return allRoutes;
-	}
 	public int shortest(){
 		Integer shortest = Integer.MAX_VALUE;
 		for (Integer current : routeDistances)
@@ -36,6 +30,12 @@ public class Route {
 			if(current > longest)
 				longest = current;
 		return longest.intValue();
+	}
+	private List<String> allPossibleRoutes(List<String> cities){
+		List<String> allRoutes = new ArrayList<String>();
+		List<String> usedCities = new ArrayList<String>(); 
+		mountRoutes(cities, usedCities, allRoutes);
+		return allRoutes;
 	}
 	private List<Integer> routeDistancesFor(List<String> routes, List<CityDistance> distances) {
 		List<Integer> routeDistances = new ArrayList<Integer>();
