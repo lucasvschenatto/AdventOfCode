@@ -1,27 +1,25 @@
 package adventOfCode;
 
-public class Day14 {
-	private int speed;
-	private int energy;
-	private int rest;
-	public Day14(String reindeerStats){
-		String[] words = reindeerStats.split(" ");
-		speed = Integer.valueOf(words[3]);
-		energy = Integer.valueOf(words[6]);
-		rest = Integer.valueOf(words[13]);
+import adventOfCode.submit.Challenge;
+import adventOfCode.day14.*;
+
+public class Day14 implements Challenge{
+	@Override
+	public String part1(String input) {
+		return String.valueOf(longest(input,2503));
 	}
-	private int move(int time){
-		return 0;
+
+	@Override
+	public String part2(String input) {
+		return String.valueOf(morePoints(input,2503));
 	}
-	private int rest(int time){
-		return 0;
+	public int longest(String reindeer, int time){
+		Race r = new Race(reindeer);
+		return r.longest(time);
 	}
-	public int fly(int time) {
-		if(time>energy){
-			int a = (speed*energy);
-			int b = a+rest;
-			return time/b;
-		}			
-		return speed*time;
+	public int morePoints(String reindeer, int time){
+		Race r = new Race(reindeer);
+		return r.morePoints(time);
 	}
+	
 }
