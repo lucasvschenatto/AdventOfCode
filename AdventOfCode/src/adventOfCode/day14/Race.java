@@ -17,6 +17,16 @@ public class Race {
 	public int longest(int time){
 		for(Reindeer r: reindeer)
 			result.put(r, Integer.valueOf(r.fly(time)));
+		return getWinnersScore();
+	}
+	public int morePoints(int time){
+		for(int i=0; i<time;i++){
+			for(Reindeer r: reindeer)
+				result.put(r, Integer.valueOf(r.fly(time)));
+		}			
+		return 0;
+	}
+	private int getWinnersScore(){
 		result.values().forEach(new Consumer<Integer>() {
 			@Override
 			public void accept(Integer t) {
@@ -25,8 +35,5 @@ public class Race {
 			}
 		});
 		return longest;
-	}
-	public int morePoints(int time){
-		return 0;
 	}
 }
