@@ -15,16 +15,33 @@ public class Race {
 			reindeer.add(new Reindeer(r));
 	}
 	public int longest(int time){
-		for(Reindeer r: reindeer)
-			result.put(r, Integer.valueOf(r.fly(time)));
+		for(Reindeer r: reindeer){
+			r.fly(time);
+			result.put(r, Integer.valueOf(r.getDistance()));
+		}
 		return getWinnersScore();
 	}
 	public int morePoints(int time){
 		for(int i=0; i<time;i++){
-			for(Reindeer r: reindeer)
-				result.put(r, Integer.valueOf(r.fly(time)));
-		}			
-		return 0;
+			int winningDistance = 0;
+			List <Reindeer> leading = new ArrayList<Reindeer>();
+			for(Reindeer r: reindeer){
+				r.fly(1);
+				int flied = r.getDistance();
+				if (flied == winningDistance)
+					leading.add(r);
+				else if (flied > winningDistance){
+					winningDistance = flied;
+					leading.clear();
+					leading.add(r);
+				}
+			}
+			for( Reindeer r: leading)
+				r.addPoint();
+		}
+		for(Reindeer r: reindeer)
+			result.put(r, Integer.valueOf(r.getPoints()));
+		return getWinnersScore();
 	}
 	private int getWinnersScore(){
 		result.values().forEach(new Consumer<Integer>() {
