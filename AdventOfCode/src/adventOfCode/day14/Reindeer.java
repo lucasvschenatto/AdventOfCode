@@ -1,7 +1,7 @@
 package adventOfCode.day14;
 
 public class Reindeer {
-	public ReindeerState state;
+	private Flight state;
 	private int distance;
 	private int points;
 	private int speed;
@@ -15,29 +15,14 @@ public class Reindeer {
 		distance = 0;
 		state = new Move(energy);
 	}
-//	private int move(int time){
-//		if (time>energy)
-//			return speed*energy;
-//		else
-//			return speed*time;
-//	}
 	public void fly(int time) {
 		state.fly(time, this);
-//		int distance = 0;
-//		while(time>0){
-//			distance += move(time);
-//			time = time-energy-rest;
-//		}
-//		return distance;
 	}
-	public void increaseDistance(int increment){
-		distance = distance + increment;
+	public void moveThisMuchTime(int increment){
+		distance = distance + (increment * speed);
 	}
 	public int getDistance(){
 		return distance;
-	}
-	public int getSpeed(){
-		return speed;
 	}
 	public int getEnergy(){
 		return energy;
@@ -45,7 +30,7 @@ public class Reindeer {
 	public int getRest(){
 		return rest;
 	}
-	public void setState(ReindeerState state){
+	public void setState(Flight state){
 		this.state = state;
 	}
 	public void addPoint() {

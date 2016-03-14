@@ -14,12 +14,12 @@ public class Day14 implements Challenge{
 		return String.valueOf(morePoints(input,2503));
 	}
 	public int longest(String reindeer, int time){
-		Race r = new Race(reindeer);
-		return r.longest(time);
+		Race r = new DistanceRace(reindeer);
+		return r.run(time);
 	}
 	public int morePoints(String reindeer, int time){
-		Race r = new Race(reindeer);
-		return r.morePoints(time);
+		Race r = new PointsRace(reindeer);
+		return r.run(time);
 	}
 	
 }
