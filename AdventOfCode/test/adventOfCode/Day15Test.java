@@ -28,7 +28,7 @@ public class Day15Test {
 
 	private void bestRecipeFor(String ingredients, String expectedDivision) {
 		RecipeMaker r = new RecipeMaker(ingredients);
-		fail("Not implemented yet");
+		fail("Not implemented yet"); 
 		
 	}
 	private void recipeScoreFor(String ingredients, String division, int capacity, int durability, int flavor, int texture) {
