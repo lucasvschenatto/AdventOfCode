@@ -2,6 +2,9 @@ package adventOfCode;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import adventOfCode.day15.Ingredient;
@@ -17,30 +20,34 @@ public class Day15Test {
 	}
 	@Test
 	public void recipe(){
-		recipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","100",-100,-200,600,300);
+		recipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","Butterscotch:100",0);
 		recipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
-				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3","44,56",62842880);
+				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3","Butterscotch:44,Cinnamon:56",62842880);
 	}
 	@Test
 	public void findBestRecipe(){
 		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","100");
 	}
 
-	private void bestRecipeFor(String ingredients, String expectedDivision) {
+	private void bestRecipeFor(String ingredients, String expected) {
 		RecipeMaker r = new RecipeMaker(ingredients);
-		fail("Not implemented yet"); 
+		String actual = r.mostDeliciousQuantities();
+		assertEquals(expected,actual);
 		
 	}
-	private void recipeScoreFor(String ingredients, String division, int capacity, int durability, int flavor, int texture) {
-		Recipe r = new Recipe(ingredients, division);
-			assertEquals(capacity,r.capacityScore());
-			assertEquals(durability,r.durabilityScore());
-			assertEquals(flavor,r.flavorScore());
-			assertEquals(texture,r.textureScore());
+	private void recipeScoreFor(String ingredients, String quantities, int total) {
+		Recipe r = new Recipe(ingredients);
+		r.newQuantities(buildQuantitiesMap(quantities));
+		assertEquals(total,r.totalScore());
 	}
-	private void recipeScoreFor(String ingredients, String division, int total) {
-		Recipe r = new Recipe(ingredients, division);
-			assertEquals(total,r.totalScore());
+	private Map<String, Integer> buildQuantitiesMap(String quant) {
+		Map<String,Integer> quantities = new HashMap<String,Integer>();
+		String[] q = quant.split(",");
+		for (String string : q) {
+			String[] ingr = string.split(":");
+			quantities.put(ingr[0], Integer.valueOf(ingr[1]));
+		}
+		return quantities;
 	}
 	private void ingredientScoreFor(String ingredient, int capacity, int durability, int flavor, int texture) {
 		int spoons = 100;

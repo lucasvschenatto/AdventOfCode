@@ -8,12 +8,12 @@ public class Ingredient {
 	private int texture;
 	private int spoons;
 	public Ingredient(String properties, int spoons) {
-		String[] words = properties.split("[,\\s]");
+		String[] words = properties.split("[,:\\s]");
 		name       = words[0];
-		capacity   = Integer.valueOf(words[2]);
-		durability = Integer.valueOf(words[5]);
-		flavor     = Integer.valueOf(words[8]);
-		texture    = Integer.valueOf(words[11]);
+		capacity   = Integer.valueOf(words[3]);
+		durability = Integer.valueOf(words[6]);
+		flavor     = Integer.valueOf(words[9]);
+		texture    = Integer.valueOf(words[12]);
 		this.spoons = spoons;
 	}
 	public int capacityScore()  { return capacity*spoons;   }
@@ -21,4 +21,5 @@ public class Ingredient {
 	public int flavorScore()    { return flavor*spoons;     }
 	public int textureScore()   { return texture*spoons;    }
 	public String getName()     { return name;              }
+	public void setSpoons(int spoons){this.spoons = spoons; }
 }
