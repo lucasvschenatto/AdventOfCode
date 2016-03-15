@@ -8,7 +8,7 @@ public class RecipeMaker {
 		recipe = new Recipe(ingredients);
 	}
 
-	public String mostDeliciousQuantities() {
+	public String mostDeliciousArrangement() {
 		List<String> names = recipe.getIngredientsNames();
 //		StringBuilder result = new StringBuilder();
 //		for (String name : names) {
@@ -18,6 +18,7 @@ public class RecipeMaker {
 //			result.append(",");
 //		}
 //		return result.toString();
+		return null;
 	}
 
 }

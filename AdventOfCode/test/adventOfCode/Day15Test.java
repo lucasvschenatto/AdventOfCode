@@ -31,7 +31,7 @@ public class Day15Test {
 
 	private void bestRecipeFor(String ingredients, String expected) {
 		RecipeMaker r = new RecipeMaker(ingredients);
-		String actual = r.mostDeliciousQuantities();
+		String actual = r.mostDeliciousArrangement();
 		assertEquals(expected,actual);
 		
 	}
