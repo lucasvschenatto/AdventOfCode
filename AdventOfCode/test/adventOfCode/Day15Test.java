@@ -10,6 +10,7 @@ import org.junit.Test;
 import adventOfCode.day15.Ingredient;
 import adventOfCode.day15.Recipe;
 import adventOfCode.day15.RecipeMaker;
+import adventOfCode.day15.Spoon;
 
 public class Day15Test {
 
@@ -22,30 +23,40 @@ public class Day15Test {
 	public void recipe(){
 		recipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","Butterscotch:100",0);
 		recipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
-				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3","Butterscotch:44,Cinnamon:56",62842880);
+				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3"
+				,"Butterscotch:44,Cinnamon:56",62842880);
 	}
 	@Test
 	public void findBestRecipe(){
-		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","100");
+		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","Butterscotch:100");
+		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
+				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3"
+				,"Butterscotch:44,Cinnamon:56");
+		bestRecipeFor("A: capacity -1, durability 3, flavor 2, texture 1, calories 1"
+				+ "\nB: capacity 1, durability 1, flavor 2, texture 3, calories 1"
+				,"A:37,B:63");
 	}
 
-	private void bestRecipeFor(String ingredients, String expected) {
+	private void bestRecipeFor(String ingredients, String expectedA) {
 		RecipeMaker r = new RecipeMaker(ingredients);
-		String actual = r.mostDeliciousArrangement();
-		assertEquals(expected,actual);
-		
+		Map<String,Spoon> actualA = r.mostDeliciousArrangement();
+		for(String i:expectedA.split(",")){
+			int expected = Integer.parseInt(i.substring(i.indexOf(":")+1,i.length()));
+			int actual = actualA.get(i.substring(0, i.indexOf(":"))).quantity;
+			assertEquals(expected,actual);
+		}		
 	}
 	private void recipeScoreFor(String ingredients, String quantities, int total) {
 		Recipe r = new Recipe(ingredients);
 		r.newQuantities(buildQuantitiesMap(quantities));
 		assertEquals(total,r.totalScore());
 	}
-	private Map<String, Integer> buildQuantitiesMap(String quant) {
-		Map<String,Integer> quantities = new HashMap<String,Integer>();
+	private Map<String, Spoon> buildQuantitiesMap(String quant) {
+		Map<String,Spoon> quantities = new HashMap<String,Spoon>();
 		String[] q = quant.split(",");
 		for (String string : q) {
 			String[] ingr = string.split(":");
-			quantities.put(ingr[0], Integer.valueOf(ingr[1]));
+			quantities.put(ingr[0], new Spoon(Integer.parseInt(ingr[1])));
 		}
 		return quantities;
 	}
