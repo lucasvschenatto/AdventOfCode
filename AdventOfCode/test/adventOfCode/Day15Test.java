@@ -27,16 +27,44 @@ public class Day15Test {
 				,"Butterscotch:44,Cinnamon:56",62842880);
 	}
 	@Test
-	public void findBestRecipe(){
+	public void BestRecipe(){
 		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8","Butterscotch:100");
 		bestRecipeFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
 				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3"
 				,"Butterscotch:44,Cinnamon:56");
 		bestRecipeFor("A: capacity -1, durability 3, flavor 2, texture 1, calories 1"
-				+ "\nB: capacity 1, durability 1, flavor 2, texture 3, calories 1"
+				+ "\nB: capacity 1, durability -1, flavor 2, texture 3, calories 1"
 				,"A:37,B:63");
+		bestRecipeFor("A: capacity 1, durability -1, flavor 2, texture 3, calories 1"
+				+ "\nB: capacity -1, durability 3, flavor 2, texture 1, calories 1"
+				,"A:63,B:37");
+		bestRecipeFor("Frosting: capacity 4, durability -2, flavor 0, texture 0, calories 5"
+				+"\nCandy: capacity 0, durability 5, flavor -1, texture 0, calories 8"
+				+"\nButterscotch: capacity -1, durability 0, flavor 5, texture 0, calories 6"
+				+"\nSugar: capacity 0, durability 0, flavor -2, texture 2, calories 1"
+				,"Frosting:24,Candy:29,Butterscotch:31,Sugar:16");
+	}
+	
+	@Test
+	public void bestRecipeScore(){
+		bestRecipeScoreFor("A: capacity -1, durability 3, flavor 2, texture 1, calories 1"
+				+ "\nB: capacity 1, durability -1, flavor 2, texture 3, calories 1"
+				,56409600);
+		bestRecipeScoreFor("Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
+				+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3"
+				,62842880);
+		bestRecipeScoreFor("Frosting: capacity 4, durability -2, flavor 0, texture 0, calories 5"
+				+"\nCandy: capacity 0, durability 5, flavor -1, texture 0, calories 8"
+				+"\nButterscotch: capacity -1, durability 0, flavor 5, texture 0, calories 6"
+				+"\nSugar: capacity 0, durability 0, flavor -2, texture 2, calories 1"
+				,18965440);
 	}
 
+	private void bestRecipeScoreFor(String ingredients, int expected) {
+		RecipeMaker r = new RecipeMaker(ingredients);
+		int actual = r.bestRecipeScore();
+		assertEquals(expected,actual);
+	}
 	private void bestRecipeFor(String ingredients, String expectedA) {
 		RecipeMaker r = new RecipeMaker(ingredients);
 		Map<String,Spoon> actualA = r.mostDeliciousArrangement();

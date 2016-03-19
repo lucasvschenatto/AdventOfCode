@@ -1,8 +1,6 @@
 package adventOfCode.day15;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,33 +32,35 @@ public class RecipeMaker {
 	private void tryToImprove() {
 		Spoon[] a = new Spoon[0];
 		a = (Spoon[]) arrangement.values().toArray(a);
-		for (int i = 0; i < a.length-1; i++) {
-			for (int j = i+1; j< a.length;j++){
-				boolean decreaseFirst = true;
-				boolean increaseFirst = false;
-				do{
-					int before = recipe.totalScore();
-					a[i].quantity--;
-					a[j].quantity++;
-					recipe.newQuantities(arrangement);
-					int after = recipe.totalScore();
-					if(before>after){
-						decreaseFirst = false;
-						a[i].quantity++;
-						a[j].quantity--;
-						recipe.newQuantities(arrangement);
-					}
-				}while(decreaseFirst && a[i].quantity>0);
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j< a.length;j++){
+				if (i != j){
+					improveThruTransfer(a, i, j);
+					improveThruTransfer(a, j, i);
+				}
 			}
 		}
-		for(String name:recipe.getIngredientsNames()){
-			Spoon current = arrangement.get(name);
+	}
+	
+	private void improveThruTransfer(Spoon[] spoons, int from, int to){
+		boolean decrease = true;
+		while(decrease && !spoons[from].isEmpty()){
+			int before = recipe.totalScore();
+			spoons[from].quantity--;
+			spoons[to].quantity++;
+			recipe.newQuantities(arrangement);
+			int after = recipe.totalScore();
+			if(before>after || spoons[from].quantity==0){
+				decrease = false;
+				spoons[from].quantity++;
+				spoons[to].quantity--;
+				recipe.newQuantities(arrangement);
+			}
 		}
-//		Collection<Integer> collection = arrangement.values();
-//		Iterator<Integer> iterator = collection.iterator();
-//		while(iterator.hasNext()){
-//			Integer current = iterator.next();
-//			
-//		}
+	}
+
+	public int bestRecipeScore() {
+		mostDeliciousArrangement();
+		return recipe.totalScore();
 	}
 }

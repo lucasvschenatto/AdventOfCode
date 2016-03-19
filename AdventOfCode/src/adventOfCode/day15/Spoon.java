@@ -5,6 +5,11 @@ public class Spoon {
 	public Spoon(int quantity){
 		this.quantity = quantity;
 	}
+	public boolean isEmpty(){
+		if(quantity==0)
+			return true;
+		return false;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
