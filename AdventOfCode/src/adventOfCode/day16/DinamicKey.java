@@ -6,7 +6,6 @@ import java.util.List;
 
 class DinamicKey{
 	private List<String> attributes;
-	private boolean lastMatch;
 	private DinamicKey(List<String> attributes){
 		this.attributes = new ArrayList<String>(attributes);
 	}
@@ -14,23 +13,22 @@ class DinamicKey{
 		return new DinamicKey(Arrays.asList(attributes.split(", ")));
 	}
 	@Override
-	public boolean equals(Object other) {
-		Factory f = new Factory(this);
-		for (String atr : ((DinamicKey) other).attributes)
-			attributes.forEach((String hint)-> {
-				Strategy s = f.create(hint);
-				s.match(atr);
-			});
-//			if (!attributes.contains(atr))
-//				return false;
-		return lastMatch;
-	}
-	@Override
 	public int hashCode(){
 		return 0;
 	}
-	public void setLastMatch(boolean lastMatch) {
-		if(this.lastMatch != false)
-			this.lastMatch = lastMatch;
+	@Override
+	public boolean equals(Object other) {
+		for (String atr : ((DinamicKey) other).attributes)
+			if(!match(attributes,atr))
+				return false;
+		return true;
 	}
+	private boolean match(List<String> hints, String atr) {
+		for (String hint : hints) {
+			Strategy s = Factory.create(hint);
+			if (s.match(atr))
+				return true;
+		}
+		return false;
+	}	
 }
