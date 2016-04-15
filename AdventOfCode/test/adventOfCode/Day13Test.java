@@ -27,6 +27,6 @@ public class Day13Test {
 	public void part2() {
 		Day13 d = new Day13();		
 		String result = d.part2(input);
-		assertEquals("330",result);
+		assertEquals("286",result);
 	}
 }

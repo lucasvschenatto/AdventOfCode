@@ -61,7 +61,7 @@ public class Day8Test {
 				inMemorySpaceFor("\"\\x27\"", 1);
 				inMemorySpaceFor("\"\\xd8\\x00\"", 2);
 			}
-			@Test@Ignore
+			@Test
 			public void notASCIICode(){
 				d = new Day8();
 				try{

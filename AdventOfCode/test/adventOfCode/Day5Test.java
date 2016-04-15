@@ -77,7 +77,7 @@ public class Day5Test {
 			findNice("efe",Strategy.REPEATWITHONEBETWEEN);
 			findNice("aaa",Strategy.REPEATWITHONEBETWEEN);
 		}
-		@Test@Ignore
+		@Test
 		public void allNewProperties(){
 			exactNicesNew("", 0);
 		}
