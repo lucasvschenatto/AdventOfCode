@@ -1,40 +1,56 @@
 package adventOfCode.day16;
 
-class Factory {
+public abstract class Factory {
+	private static Factory strategyMachine;
+	protected abstract Strategy createFor(String hintName, String hintValue);
+	public static void setOldMachine(){
+		strategyMachine = new Factory(){
+			protected Strategy createFor(String hintName,String hintValue){
+				return new Default(hintName, hintValue);
+			}
+		};
+	}
+	public static void setNewMachine(){
+		strategyMachine = new Factory(){
+			protected Strategy createFor(String hintName,String hintValue){
+				switch (hintName) {
+							case "cats":
+								return new Cats(hintValue);
+							case "trees":
+								return new Trees(hintValue);
+							case "pomeranians":
+								return new Pomeranians(hintValue);
+							case "goldfish":
+								return new GoldFish(hintValue);
+				default:
+					return new Default(hintName, hintValue);
+				}
+			}
+		};
+	}
 	public static Strategy create(String hint){
 		String hintName = hint.substring(0, hint.indexOf(": "));
 		String hintValue = hint.substring(hint.indexOf(": ")+2,hint.length());
-		switch (hintName) {
-		//			case "cats":
-		//				return new Cats();
-		//			case "trees":
-		//				return new Trees();
-		//			case "pomeranians":
-		//				return new Pomeranians();
-		//			case "goldfish":
-		//				return new GoldFish();
-		default:
-			return new Default(hintName, hintValue);
-		}
+		return strategyMachine.createFor(hintName,hintValue);
 	}
 }
 class Default implements Strategy{
 	protected String name;
-	protected String value;
+	protected int value;
 	Default(String name, String value){
 		this.name = name;
-		this.value = value;
+		this.value = Integer.valueOf(value);
 	}
 	public boolean match(String other) {
-		return (nameMatches(other) && valueMatches(other))? true:false;
+		String otherName = other.split(": ")[0];
+		int otherValue = Integer.valueOf(other.split(": ")[1]); 
+		return (nameMatches(otherName) && valueMatches(otherValue))? true:false;
 	}
-	protected boolean nameMatches(String other){
-		String otherName = other.substring(0, other.indexOf(": "));
+	protected boolean nameMatches(String otherName){
 		return name.equals(otherName)? true:false;
 	}
-	protected boolean valueMatches(String other){
-		String otherValue = other.substring(other.indexOf(": ")+2,other.length());
-		return value.equals(otherValue)? true:false;
+	protected boolean valueMatches(int otherValue){
+		return value == otherValue? true:false;
 	}
 }
 class GreaterThan extends Default implements Strategy{	
@@ -42,8 +58,8 @@ class GreaterThan extends Default implements Strategy{
 		super(name, value);
 	}
 	@Override
-	protected boolean valueMatches(String atribute) {
-		return false;
+	protected boolean valueMatches(int otherValue) {
+		return otherValue>value?true:false;
 	}		
 }
 class FewerThan extends Default implements Strategy{	
@@ -51,8 +67,8 @@ class FewerThan extends Default implements Strategy{
 		super(name, value);
 	}
 	@Override
-	protected boolean valueMatches(String atribute) {
-		return false;
+	protected boolean valueMatches(int otherValue) {
+		return otherValue<value?true:false;
 	}		
 }
 class Cats extends GreaterThan implements Strategy{	
@@ -65,13 +81,13 @@ class Trees extends GreaterThan implements Strategy{
 		super("trees", value);
 	}
 }
-class Pomeranians extends Default implements Strategy{
+class Pomeranians extends FewerThan implements Strategy{
 	Pomeranians(String value){
 		super("pomeranians", value);
 	}
 }
-class GoldFish extends Default implements Strategy{
+class GoldFish extends FewerThan implements Strategy{
 	GoldFish(String value){
-		super("GoldFish", value);
+		super("goldfish", value);
 	}	
 }

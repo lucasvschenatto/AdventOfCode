@@ -1,16 +1,15 @@
 package adventOfCode.day16;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class DinamicKey{
+class EgocentricKey{
 	private List<String> attributes;
-	private DinamicKey(List<String> attributes){
-		this.attributes = new ArrayList<String>(attributes);
+	private EgocentricKey(List<String> attributes){
+		this.attributes = attributes;
 	}
-	static DinamicKey create(String attributes){
-		return new DinamicKey(Arrays.asList(attributes.split(", ")));
+	static EgocentricKey create(String attributes){
+		return new EgocentricKey(Arrays.asList(attributes.split(", ")));
 	}
 	@Override
 	public int hashCode(){
@@ -18,8 +17,8 @@ class DinamicKey{
 	}
 	@Override
 	public boolean equals(Object other) {
-		for (String atr : ((DinamicKey) other).attributes)
-			if(!match(attributes,atr))
+		for (String otherAtr : ((EgocentricKey) other).attributes)
+			if(!match(attributes,otherAtr))
 				return false;
 		return true;
 	}
