@@ -10,6 +10,9 @@ public class Spoon {
 			return true;
 		return false;
 	}
+	public Spoon clone(){
+		return new Spoon(quantity);
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

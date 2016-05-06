@@ -46,7 +46,7 @@ What is the number of the real Aunt Sue?
 
 Although it hasn't changed, you can still get your puzzle input.
 
-Answer: 
+Answer: 323
  [Submit]
 
 You can also [Share] this puzzle.
