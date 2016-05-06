@@ -1,11 +1,9 @@
 package adventOfCode.day15;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
+import java.util.HashMap;
 
 public class RecipeMaker {
 	private final int totalSpoons = 100;
@@ -41,17 +39,30 @@ public class RecipeMaker {
 //		listAllRecipes();
 	}
 
-	public void listAllRecipes() {
+	public List<Map<String,Spoon>> findAllExactCalories() {
 		List<Map<String,Spoon>> possibilities = allPossibilities();
-		List<Map<String,Spoon>> valid = OnlyExactCalories(possibilities);
+		return validPossibilities(OnlyExactCalories(possibilities));
 	}
 	
 	
 	
+	private List<Map<String, Spoon>> validPossibilities(List<Map<String, Spoon>> possibilities) {
+		List<Map<String,Spoon>> validPossibilities = new ArrayList<Map<String,Spoon>>();
+		for(Map<String,Spoon> map : possibilities){
+			int total = 0;
+			for(Spoon spoon : map.values())
+				total += spoon.quantity;
+			if(total == totalSpoons)
+				validPossibilities.add(map);
+		}
+		return validPossibilities;
+	}
 	private List<Map<String,Spoon>> OnlyExactCalories(List<Map<String,Spoon>> possibilities) {
-		List<Map<String,Spoon>> exactCalories = clone(possibilities);
-		for(Map<String,Spoon> quantities: exactCalories){
-			
+		List<Map<String,Spoon>> exactCalories = new ArrayList<Map<String,Spoon>>();
+		for(Map<String,Spoon> quantities: possibilities){
+			recipe.newQuantities(quantities);
+			if(caloriesTarget == recipe.caloriesScore())
+				exactCalories.add(quantities);
 		}
 		return exactCalories;
 	}
@@ -72,43 +83,35 @@ public class RecipeMaker {
 	}
 	private Map<String,Spoon> initialArrangement() {
 		Map<String,Spoon> initial = new HashMap<String,Spoon>();
-		Set<String> ingredients = initial.keySet();
-		ingredients.forEach(ingredient->{
+		arrangement.keySet().forEach(ingredient->{
 			initial.put(ingredient, new Spoon(0));
 		} );
 		return initial;
 	}
-	private List<Map<String,Spoon>> clone(List<Map<String,Spoon>> original) {
-		List<Map<String,Spoon>> cloneList = new ArrayList<Map<String,Spoon>>();
-		for(Map<String,Spoon> current: original){
-			cloneList.add(clone(current));
-		}		
-		return cloneList;
-	}
+	
 	private Map<String,Spoon> clone(Map<String,Spoon> original) {
 		Map<String,Spoon> clone = new HashMap<String,Spoon>();
-		Set<String> ingredients = original.keySet();
-		for (String ingredient : ingredients) {
+		for (String ingredient : original.keySet()) {
 			clone.put(ingredient, original.get(ingredient).clone());
 		}
 		return clone;
 	}
-	private boolean isLast(Map<String,Spoon> spoon){
-		for (Spoon s: spoon.values())
-			if(s.quantity < 100)
+	private boolean isLast(Map<String,Spoon> spoonMap){
+		for (Spoon s: spoonMap.values())
+			if(s.quantity < totalSpoons)
 				return false;
 		return true;
 	}
-	private void increase(Map<String,Spoon> arrangement){
-		increaseAt(arrangement,0);
+	private void increase(Map<String,Spoon> spoonMap){
+		List<Spoon> spoons = new ArrayList<Spoon>(spoonMap.values());
+		increaseAt(spoons,0);
 	}
-	private void increaseAt(Map<String,Spoon> arrangement, int i) {
-		List<Spoon> spoon = (List<Spoon>) arrangement.values();
-		if(spoon.get(i).quantity <100)
+	private void increaseAt(List<Spoon> spoon, int i) {
+		if(spoon.get(i).quantity <totalSpoons)
 			spoon.get(i).quantity++;
 		else{
 			spoon.get(i).quantity = 0;
-			increaseAt(arrangement, ++i);
+			increaseAt(spoon, ++i);
 		}
 	}
 	

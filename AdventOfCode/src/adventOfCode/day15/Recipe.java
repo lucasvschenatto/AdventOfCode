@@ -25,6 +25,16 @@ public class Recipe {
 			ingredient.setSpoons(s.quantity);
 		}
 	}
+	public List<String> getIngredientsNames() {
+		List<String> names = new ArrayList<String>();
+		for (Ingredient ingredient : ingredients) {
+			names.add(ingredient.getName());
+		}
+		return names;
+	}
+	public int caloriesScore() {
+		return getScore(ingredient -> ingredient.caloriesScore());
+	}
 	private int capacityScore(){
 		return getScore(ingredient -> ingredient.capacityScore());
 	}
@@ -45,12 +55,5 @@ public class Recipe {
 	}
 	private interface Get{
 		int score(Ingredient i);
-	}
-	public List<String> getIngredientsNames() {
-		List<String> names = new ArrayList<String>();
-		for (Ingredient ingredient : ingredients) {
-			names.add(ingredient.getName());
-		}
-		return names;
 	}
 }
