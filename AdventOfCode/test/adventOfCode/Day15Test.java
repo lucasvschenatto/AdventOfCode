@@ -128,24 +128,52 @@ public class Day15Test{
 		
 		@Test
 		public void validPossibilities(){
-			String ingredients_8_3 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
+			String calories_8_3 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8"
 								+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3";
 			String[] expected_8_3 = {"Butterscotch: 40,Cinnamon: 60"};
 			
-			String ingredients_5_1 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 5"
-					 			  + "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 1";
+			String calories_5_1 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 5"
+					 			+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 1";
 			String[] expected_5_1 = {"Butterscotch: 100,Cinnamon: 0"};
 			
-			String ingredients_7_3 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 7"
-		 			  + "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3";
+			String calories_7_3 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 7"
+								+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3";
 			String[] expected_7_3 = {"Butterscotch: 50,Cinnamon: 50"};
 			
-			exactCaloriesFor(ingredients_8_3, expected_8_3, 500);
-			exactCaloriesFor(ingredients_5_1, expected_5_1, 500);
-			exactCaloriesFor(ingredients_7_3, expected_7_3, 500);
+			String calories_5_5 = "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 5"
+					+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 5";
+			List<String> exp = new ArrayList<String>();
+			for(int i=0; i<=100;i++)
+				exp.add("Butterscotch: "+i+",Cinnamon: "+(100-i));
+			
+			String calories_7_9_3 = "Alphajor: capacity -1, durability -2, flavor 6, texture 3, calories 7"
+					+ "\nButterscotch: capacity 2, durability 3, flavor -2, texture -1, calories 9"
+					+ "\nCinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3";
+			String[] expected_7_9_3 = {"Alphajor: 20,Butterscotch: 20,Cinnamon: 60"
+					,"Alphajor: 50,Butterscotch: 0,Cinnamon: 50"
+					,"Alphajor: 47,Butterscotch: 2,Cinnamon: 51"
+					,"Alphajor: 44,Butterscotch: 4,Cinnamon: 52"
+					,"Alphajor: 41,Butterscotch: 6,Cinnamon: 53"
+					,"Alphajor: 38,Butterscotch: 8,Cinnamon: 54"
+					,"Alphajor: 35,Butterscotch: 10,Cinnamon: 55"
+					,"Alphajor: 32,Butterscotch: 12,Cinnamon: 56"
+					,"Alphajor: 29,Butterscotch: 14,Cinnamon: 57"
+					,"Alphajor: 26,Butterscotch: 16,Cinnamon: 58"
+					,"Alphajor: 23,Butterscotch: 18,Cinnamon: 59"
+					,"Alphajor: 17,Butterscotch: 22,Cinnamon: 61"
+					,"Alphajor: 14,Butterscotch: 24,Cinnamon: 62"
+					,"Alphajor: 11,Butterscotch: 26,Cinnamon: 63"
+					,"Alphajor: 8,Butterscotch: 28,Cinnamon: 64"
+					,"Alphajor: 5,Butterscotch: 30,Cinnamon: 65"};
+			
+			exactCaloriesFor(calories_8_3, expected_8_3, 500, 1);
+			exactCaloriesFor(calories_5_1, expected_5_1, 500, 1);
+			exactCaloriesFor(calories_7_3, expected_7_3, 500, 1);
+			exactCaloriesFor(calories_5_5, exp.toArray(new String[0]), 500, exp.size());
+			exactCaloriesFor(calories_7_9_3, expected_7_9_3, 500, 17);
 		}
 
-		private void exactCaloriesFor(String ingredients, String[] expected, int caloriesTarget) {
+		private void exactCaloriesFor(String ingredients, String[] expected, int caloriesTarget, int size) {
 			List<Map<String,Spoon>> expectedPossibilities = new ArrayList<Map<String,Spoon>>();
 			for(String quantities: expected){
 				expectedPossibilities.add(buildQuantitiesMap(quantities));
@@ -153,7 +181,7 @@ public class Day15Test{
 			RecipeMaker r = new RecipeMaker(ingredients);
 			r.setCaloriesTarget(caloriesTarget);
 			List<Map<String,Spoon>> actual = r.findAllExactCalories();
-			assertEquals(1,actual.size());
+			assertEquals(size,actual.size());
 			for (Map<String, Spoon> map : actual) {
 				boolean found = false;
 				for(Map<String, Spoon> expMap: expectedPossibilities){

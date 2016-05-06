@@ -33,5 +33,8 @@ public class Spoon {
 			return false;
 		return true;
 	}
-	
+	@Override
+	public String toString(){
+		return (quantity+" spoons");
+	}
 }
