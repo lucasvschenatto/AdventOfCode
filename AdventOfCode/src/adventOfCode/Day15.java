@@ -15,7 +15,11 @@ public class Day15 implements Challenge{
 
 	@Override
 	public String part2(String input) {
-		return String.valueOf("");
+		RecipeMaker r = new RecipeMaker(input, 500);
+		r.findBestRecipe();
+		int result = r.totalScore();
+		System.out.println("Part2 result: "+result);
+		return String.valueOf(result);
 	}
 
 }

@@ -25,4 +25,18 @@ public class Ingredient {
 	public int caloriesScore()  { return calories*spoons;   }
 	public String getName()     { return name;              }
 	public void setSpoons(int spoons){this.spoons = spoons; }
+	
+	@Override
+	public String toString(){
+		String repr = "{"
+				+ " name: "+name
+				+ ", capacity: "+capacity
+				+ ", durability: "+durability
+				+ ", flavor: "+flavor
+				+ ", texture: "+texture
+				+ ", calories: "+calories
+				+ ", spoons: "+spoons
+				+ " }";
+		return repr;
+	}
 }
