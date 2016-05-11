@@ -18,7 +18,6 @@ public class Day15 implements Challenge{
 		RecipeMaker r = RecipeMaker.create(input, 500);
 		r.findBestRecipe();
 		int result = r.totalScore();
-		System.out.println("Part2 result: "+result);
 		return String.valueOf(result);
 	}
 
