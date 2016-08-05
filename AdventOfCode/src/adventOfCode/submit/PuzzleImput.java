@@ -22,12 +22,7 @@ public class PuzzleImput {
 	public String getInOneLine(){
 		List<String> lines = getLines();
 		StringBuilder inOne = new StringBuilder();
-		for (String line : lines) {
-			if(inOne.length()==0)
-				inOne.append(line);
-			else
-				inOne.append("\n"+line);
-		}
-		return inOne.toString();
+		lines.forEach((line) ->	inOne.append("\n"+line));
+		return inOne.toString().replaceFirst("\n", "");
 	}
 }
