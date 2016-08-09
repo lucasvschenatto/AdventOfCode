@@ -83,10 +83,6 @@ public class Reservatory {
 		});
 		return minimum.value;
 	}
-	private class I{
-		private int value;
-		private I(int value){this.value = value;}
-	}
 	public int waysWithMinimum() {
 		loadWaysWithMinimumContainers();
 		return waysWithMinimum.size();
@@ -102,5 +98,9 @@ public class Reservatory {
 			});
 			
 		}
+	}
+	private class I{
+		private int value;
+		private I(int value){this.value = value;}
 	}
 }
