@@ -1,13 +1,16 @@
 package adventOfCode.day19;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NuclearFission {
-	Interpreter interpreter;
-	Set<String> possibleMolecules;
-	public NuclearFission(String input) {
-		interpreter = new Interpreter(input);
+	private final List<Replacement> replacements;
+	private final String moleculeFrom;
+	private Set<String> possibleMolecules;
+	public NuclearFission(List<Replacement> replacements, String moleculeFrom) {
+		this.replacements = replacements;
+		this.moleculeFrom = moleculeFrom;
 	}
 
 	public boolean canMake(String expMolecule){
@@ -26,7 +29,7 @@ public class NuclearFission {
 	private void loadPossibleMolecules() {
 		if(possibleMolecules == null){
 			possibleMolecules = new HashSet<String>();
-			interpreter.getReplacements().forEach((replacement)->addPossibleMolecules(replacement,interpreter.getMolecule()));
+			replacements.forEach((replacement)->addPossibleMolecules(replacement,moleculeFrom));
 		}
 	}
 
@@ -45,7 +48,7 @@ public class NuclearFission {
 		return mol.indexOf(rep,current) != -1;
 	}
 
-	public int getPossibleNumber() {
+	public int getNumberOfPossibleMolecules() {
 		loadPossibleMolecules();
 		return possibleMolecules.size();
 	}

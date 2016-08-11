@@ -1,5 +1,6 @@
 package adventOfCode;
 
+import adventOfCode.day19.Interpreter;
 import adventOfCode.day19.NuclearFission;
 import adventOfCode.submit.Challenge;
 
@@ -7,8 +8,9 @@ public class Day19 implements Challenge {
 
 	@Override
 	public String part1(String input) {
-		NuclearFission n = new NuclearFission(input);
-		return String.valueOf(n.getPossibleNumber());
+		Interpreter i = new Interpreter(input);
+		NuclearFission n = new NuclearFission(i.getReplacements(),i.getMolecule());
+		return String.valueOf(n.getNumberOfPossibleMolecules());
 	}
 
 	@Override
