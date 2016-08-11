@@ -43,6 +43,7 @@ public class Day19Test {
 	public static class LaboratoryTest{
 		@Test
 		public void countSteps(){
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HOOHO",0);
 			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HHOHO",1);
 		}
 
