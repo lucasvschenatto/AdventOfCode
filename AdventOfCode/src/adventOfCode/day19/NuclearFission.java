@@ -13,15 +13,15 @@ public class NuclearFission {
 		this.moleculeFrom = moleculeFrom;
 	}
 
-	public boolean canMake(String expMolecule){
+	public boolean canMake(String goalMolecule){
 		boolean result = false;
 		for(String molecule: getPossibleMolecules())
-			if(molecule.equals(expMolecule))
+			if(molecule.equals(goalMolecule))
 				result = true;
 		return result;
 	}
 
-	private Set<String> getPossibleMolecules() {
+	Set<String> getPossibleMolecules() {
 		loadPossibleMolecules();
 		return possibleMolecules;
 	}

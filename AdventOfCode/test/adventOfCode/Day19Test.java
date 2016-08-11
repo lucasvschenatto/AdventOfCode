@@ -17,6 +17,7 @@ public class Day19Test {
 	private static String rep3 = "H => Ba";
 	private static String rep4 = "O => HH";
 	private static String rep5 = "X => YY";
+	private static String rep6 = "e => H";
 	private static String molecule1 = "HOHOHO";
 	private static String molecule2 = "HOBaRd";
 	private static String reps =  
@@ -24,7 +25,8 @@ public class Day19Test {
 			+ rep2 + "\n"
 			+ rep3 + "\n"
 			+ rep4 + "\n"
-			+ rep5;
+			+ rep5 + "\n"
+			+ rep6;
 	private static String input1 = 
 			  reps + "\n"
 			+ "\n"
@@ -43,8 +45,24 @@ public class Day19Test {
 	public static class LaboratoryTest{
 		@Test
 		public void countSteps(){
-			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HOOHO",0);
-			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HHOHO",1);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HOHOHO",0);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"HHOHO" ,1);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"OOHO"  ,2);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"OHO"   ,3);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"OH"    ,4);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"H"     ,5);
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"e"     ,6);
+		}
+		
+		@Test
+		public void acceptanceTest(){
+			String input = "e => H"
+					+"e => O"
+					"H => HO"
+					"H => OH
+					"O => HH
+			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"e"     ,6);
+			
 		}
 
 		private void givenInputAndStartingMatter_ItTakesThisManySteps(String input, String startingMatter, int expected) {
