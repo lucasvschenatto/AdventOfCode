@@ -56,13 +56,18 @@ public class Day19Test {
 		
 		@Test
 		public void acceptanceTest(){
-			String input = "e => H"
-					+"e => O"
-					"H => HO"
-					"H => OH
-					"O => HH
-			givenInputAndStartingMatter_ItTakesThisManySteps(input1,"e"     ,6);
-			
+			String acceptanceReplacements =
+					  "e => H"  +"\n"
+					+ "e => O"  +"\n"
+					+ "H => HO" +"\n"
+					+ "H => OH" +"\n"
+					+ "O => HH";
+			String acceptanceMolecule1 = "HOH";
+			String acceptanceMolecule2 = "HOHOHO";
+			String acceptanceInput1 = acceptanceReplacements + "\n\n" + acceptanceMolecule1;
+			String acceptanceInput2 = acceptanceReplacements + "\n\n" + acceptanceMolecule2;
+			givenInputAndStartingMatter_ItTakesThisManySteps(acceptanceInput1,"e",3);
+			givenInputAndStartingMatter_ItTakesThisManySteps(acceptanceInput2,"e",6);
 		}
 
 		private void givenInputAndStartingMatter_ItTakesThisManySteps(String input, String startingMatter, int expected) {
