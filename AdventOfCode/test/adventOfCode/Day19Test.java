@@ -8,7 +8,7 @@ import org.junit.*;
 
 import adventOfCode.day19.Interpreter;
 import adventOfCode.day19.Laboratory;
-import adventOfCode.day19.NuclearFission;
+import adventOfCode.day19.NuclearManipulation;
 import adventOfCode.day19.Replacement;
 
 public class Day19Test {
@@ -18,6 +18,7 @@ public class Day19Test {
 	private static String rep4 = "O => HH";
 	private static String rep5 = "X => YY";
 	private static String rep6 = "e => H";
+	private static String rep7 = "U => XXX";
 	private static String molecule1 = "HOHOHO";
 	private static String molecule2 = "HOBaRd";
 	private static String reps =  
@@ -26,7 +27,8 @@ public class Day19Test {
 			+ rep3 + "\n"
 			+ rep4 + "\n"
 			+ rep5 + "\n"
-			+ rep6;
+			+ rep6 + "\n"
+			+ rep7;
 	private static String input1 = 
 			  reps + "\n"
 			+ "\n"
@@ -38,9 +40,9 @@ public class Day19Test {
 	static Interpreter makeInterpreter(String input){
 		return new Interpreter(input);
 	}
-	static NuclearFission makeNuclearFission(String input){
+	static NuclearManipulation makeNuclearFusion(String input){
 		Interpreter i = new Interpreter(input);
-		return new NuclearFission(i.getReplacements(),i.getMolecule());
+		return new NuclearManipulation(i.getFusions(),i.getMolecule());
 	}
 	public static class LaboratoryTest{
 		@Test
@@ -94,11 +96,11 @@ public class Day19Test {
 			givenInput_ExpectThisManyPossibleMolecules(input2,4);
 		}
 		private void givenInput_ExpectThisManyPossibleMolecules(String input, int expected) {
-			NuclearFission n = makeNuclearFission(input);
+			NuclearManipulation n = makeNuclearFusion(input);
 			assertEquals(expected, n.getNumberOfPossibleMolecules());
 		}
 		private void givenInput_ExpectPossibleMolecule(String input, String expected) {
-			NuclearFission n = makeNuclearFission(input);
+			NuclearManipulation n = makeNuclearFusion(input);
 			assertTrue(n.canMake(expected));
 		}
 	}
@@ -124,7 +126,7 @@ public class Day19Test {
 	
 		private void givenInput_ExpectsMolecule(String input, String expected) {
 			Interpreter i = makeInterpreter(input);
-			String actual = i.getMolecule();
+			String actual = i.getMolecule().toString();
 			assertEquals(expected,actual);
 		}
 		private void givenInput_NotExpectsReplacement(String input, String notExpected) {
@@ -138,7 +140,7 @@ public class Day19Test {
 		private boolean replacementExists(String input, String expected) {
 			boolean exists;
 			Interpreter i = makeInterpreter(input);
-			List<Replacement> replacements = i.getReplacements();
+			List<Replacement> replacements = i.getFusions();
 			exists = false;
 			for(Replacement r : replacements)
 				if (expected.equals(r.toString()))

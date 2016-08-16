@@ -1,14 +1,13 @@
 package adventOfCode.day19;
 
-public class Replacement {
+public abstract class Replacement {
 	public final static String SEPARATOR = " => ";
 	public final String from;
 	public final String to;
 
-	public Replacement(String replacement){
-		String [] arguments = replacement.split(SEPARATOR);
-		this.from = arguments[0];
-		this.to = arguments[1];
+	public Replacement(String from, String to){
+		this.from = from;
+		this.to = to;
 	}
 	
 	public String toString(){
