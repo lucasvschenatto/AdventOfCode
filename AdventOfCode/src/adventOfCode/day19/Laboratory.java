@@ -36,6 +36,7 @@ public class Laboratory {
 				newPot.molecules = new HashSet<String>();
 			}
 			steps++;
+			System.out.println(steps);
 		}
 		return steps;
 	}
