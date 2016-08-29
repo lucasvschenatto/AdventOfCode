@@ -10,12 +10,12 @@ public abstract class CommonDivisor {
 		this.input = input;
 	}
 	
-	protected abstract int tryElvesFrom();
+	protected abstract int getMinimumElveNumber();
 
 	public List<Integer> getResult() {
 		List<Integer> result = new ArrayList<Integer>();
 		result.add(Integer.valueOf(input));
-		for(int i = tryElvesFrom(); i<(input/2)+1;i++)
+		for(int i = getMinimumElveNumber(); i<(input/2)+1;i++)
 			if(input % i == 0)
 				result.add(Integer.valueOf(i));
 		return result;

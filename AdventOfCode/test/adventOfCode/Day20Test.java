@@ -12,7 +12,9 @@ import adventOfCode.day20.CommonDivisor;
 import adventOfCode.day20.Elves;
 import adventOfCode.day20.Delivery;
 import adventOfCode.day20.ElevenPresentsAgency;
+import adventOfCode.day20.ElevenPresentsElvesFactory;
 import adventOfCode.day20.FiftyHousesElves;
+import adventOfCode.day20.TenPresentsElvesFactory;
 
 public class Day20Test {
 
@@ -55,6 +57,10 @@ public class Day20Test {
 		houseIsVisitedByNewElves(1,Arrays.asList(1));
 		houseIsVisitedByNewElves(50,Arrays.asList(1,2,5,10,25,50));
 		houseIsVisitedByNewElves(51,Arrays.asList(3,17,51));
+		houseIsVisitedByNewElves(52,Arrays.asList(2,4,13,26,52));
+		houseIsVisitedByNewElves(100,Arrays.asList(2,4,5,10,20,25,50,100));
+		houseIsVisitedByNewElves(101,Arrays.asList(101));
+		houseIsVisitedByNewElves(102,Arrays.asList(3,6,17,34,51,102));
 		houseIsVisitedByNewElves(150,Arrays.asList(3,5,6,10,15,25,30,50,75,150));
 	}
 	@Test
@@ -67,6 +73,9 @@ public class Day20Test {
 		houseReceivesFromElevenPresentsElvs(7,88 );
 		houseReceivesFromElevenPresentsElvs(8,165);
 		houseReceivesFromElevenPresentsElvs(9,143);
+		houseReceivesFromElevenPresentsElvs(50, 11 * (1+2+5+10+25+50) );
+		houseReceivesFromElevenPresentsElvs(51, 11 * (3+17+51) );
+		houseReceivesFromElevenPresentsElvs(52, 11 * (2+4+13+26+52) );
 	}
 	@Test
 	public void elevenPresentsMinimumHousesToDeliverPresents(){
@@ -78,7 +87,7 @@ public class Day20Test {
 	
 	
 	private void houseReceivesFromElevenPresentsElvs(int houses, int expected) {
-		Delivery d = new Delivery(houses,11);
+		Delivery d = new Delivery(houses,11, new ElevenPresentsElvesFactory());
 		assertEquals(expected, d.getPresents());
 	}
 
@@ -101,7 +110,7 @@ public class Day20Test {
 	}
 
 	private void houseReceivesPresents(int house, int expected) {
-		Delivery d = new Delivery(house,10);
+		Delivery d = new Delivery(house,10, new TenPresentsElvesFactory());
 		assertEquals(expected, d.getPresents());
 	}
 

@@ -1,12 +1,12 @@
 package adventOfCode.day20;
 
-public class FiftyHousesElves extends CommonDivisor {
+public class FiftyHousesElves extends Elves {
 
-	public FiftyHousesElves(int input) {
-		super(input);
+	public FiftyHousesElves(int house) {
+		super(house);
 	}
-	protected int tryElvesFrom(){
-		return (int)Math.ceil(input/50.0);
-//		return input>50? (int)Math.ceil(input/50.0) : 1;
+	protected int getMinimumElveNumber(){
+//		return (int)Math.ceil(input/50.0);
+		return input>50? (int)Math.ceil(input/50.0) : 1;
 	}
 }

@@ -1,11 +1,11 @@
 package adventOfCode.day20;
 
 public class Elves extends CommonDivisor {
-	public Elves(int input) {
-		super(input);
+	public Elves(int house) {
+		super(house);
 	}
 
-	protected int tryElvesFrom(){
+	protected int getMinimumElveNumber(){
 		return 1;
 	}
 
