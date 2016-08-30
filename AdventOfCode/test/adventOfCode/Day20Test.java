@@ -54,10 +54,10 @@ public class Day20Test {
 
 	@Test
 	public void fiftyHousesElvesTest() {
-		houseIsVisitedByNewElves(1,Arrays.asList(1));
-		houseIsVisitedByNewElves(50,Arrays.asList(1,2,5,10,25,50));
-		houseIsVisitedByNewElves(51,Arrays.asList(3,17,51));
-		houseIsVisitedByNewElves(52,Arrays.asList(2,4,13,26,52));
+		houseIsVisitedByNewElves(1,  Arrays.asList(1));
+		houseIsVisitedByNewElves(50, Arrays.asList(1,2,5,10,25,50));
+		houseIsVisitedByNewElves(51, Arrays.asList(3,17,51));
+		houseIsVisitedByNewElves(52, Arrays.asList(2,4,13,26,52));
 		houseIsVisitedByNewElves(100,Arrays.asList(2,4,5,10,20,25,50,100));
 		houseIsVisitedByNewElves(101,Arrays.asList(101));
 		houseIsVisitedByNewElves(102,Arrays.asList(3,6,17,34,51,102));

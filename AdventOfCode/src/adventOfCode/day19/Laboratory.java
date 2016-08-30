@@ -26,8 +26,9 @@ public class Laboratory {
 		int steps = 0;
 		while(!finished){
 			oldpot.molecules.forEach((molecule)->{
-				newPot.molecules.addAll(new NuclearManipulation(replacements,molecule).getPossibleMolecules());
+				newPot.molecules.addAll(new SingleManipulation(replacements,molecule).getPossibleMolecules());
 				});
+			steps++;
 //			newPot.molecules.removeIf((molecule)->{return molecule.length() > goalMolecule.length();});
 			if(newPot.molecules.contains(goalMolecule))
 				finished = true;
@@ -35,8 +36,6 @@ public class Laboratory {
 				oldpot.molecules = newPot.molecules;
 				newPot.molecules = new HashSet<String>();
 			}
-			steps++;
-			System.out.println(steps);
 		}
 		return steps;
 	}

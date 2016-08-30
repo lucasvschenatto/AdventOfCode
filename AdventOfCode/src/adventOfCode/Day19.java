@@ -2,7 +2,7 @@ package adventOfCode;
 
 import adventOfCode.day19.Interpreter;
 import adventOfCode.day19.Laboratory;
-import adventOfCode.day19.NuclearManipulation;
+import adventOfCode.day19.SingleManipulation;
 import adventOfCode.submit.Challenge;
 
 public class Day19 implements Challenge {
@@ -10,7 +10,7 @@ public class Day19 implements Challenge {
 	@Override
 	public String part1(String input) {
 		Interpreter i = new Interpreter(input);
-		NuclearManipulation n = new NuclearManipulation(i.getFusions(),i.getMolecule());
+		SingleManipulation n = new SingleManipulation(i.getFusions(),i.getMolecule());
 		return String.valueOf(n.getNumberOfPossibleMolecules());
 	}
 

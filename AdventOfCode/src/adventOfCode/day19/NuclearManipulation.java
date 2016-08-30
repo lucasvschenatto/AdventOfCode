@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class NuclearManipulation {
-	private final List<Replacement> replacements;
-	private final String moleculeFrom;
-	private Set<String> possibleMolecules;
-	public NuclearManipulation(List<Replacement> replacements, String moleculeFrom) {
+public abstract class NuclearManipulation {
+	protected final List<Replacement> replacements;
+	protected String moleculeFrom;
+	protected Set<String> possibleMolecules;
+	protected NuclearManipulation(List<Replacement> replacements, String moleculeFrom) {
 		this.replacements = replacements;
 		this.moleculeFrom = moleculeFrom;
 	}
@@ -30,14 +30,14 @@ public class NuclearManipulation {
 		return possibleMolecules;
 	}
 	
-	private void loadPossibleMolecules() {
+	protected void loadPossibleMolecules() {
 		if(possibleMolecules == null){
 			possibleMolecules = new HashSet<String>();
 			replacements.forEach((replacement)->addPossibleMolecules(replacement,moleculeFrom));
 		}
 	}
 	
-	private void addPossibleMolecules(Replacement replacement, String molecule) {
+	protected void addPossibleMolecules(Replacement replacement, String molecule) {
 		int current = 0;
 		while(canReplace(molecule,replacement.from,current)){
 			current = molecule.indexOf(replacement.from, current);
@@ -48,8 +48,7 @@ public class NuclearManipulation {
 		}
 	}
 	
-	private boolean canReplace(String mol, String rep, int current) {
+	protected boolean canReplace(String mol, String rep, int current) {
 		return mol.indexOf(rep,current) != -1;
 	}
-
 }

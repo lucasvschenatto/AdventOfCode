@@ -15,8 +15,9 @@ public class OptimizedLaboratory  extends Laboratory{
 		I steps = new I(0);
 		while(!finished){
 			oldpot.molecules.forEach((molecule)->{
-				NuclearManipulation n = new NuclearManipulation(replacements,molecule);
+				AllManipulation n = new AllManipulation(replacements,molecule);
 				newPot.molecules.addAll(n.getPossibleMolecules());
+				steps.value += n.getSteps();
 				});
 			if(newPot.molecules.contains(goalMolecule))
 				finished = true;
@@ -24,7 +25,6 @@ public class OptimizedLaboratory  extends Laboratory{
 				oldpot.molecules = newPot.molecules;
 				newPot.molecules = new HashSet<String>();
 			}
-			steps.value++;
 			System.out.println(steps);
 		}
 		return steps.value;

@@ -59,9 +59,9 @@ public class Strategist {
 	}
 
 	private boolean playerWins(Inventory equip) {
-		Player p = new Player(pHealth, equip);
-		Battle battle = new Battle(p,boss);
-		return p.equals(battle.getWinner());
+		Player player = new Player(pHealth, equip);
+		Battle battle = new Battle(player,boss);
+		return player.equals(battle.getWinner());
 	}
 
 	private Iterable<Inventory> allOptions() {
