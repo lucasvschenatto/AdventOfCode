@@ -46,6 +46,11 @@ public class Solver {
 
 	public int leastGoldNeeded() {
 		Strategist s = new Strategist(playerHitPoints, boss);
-		return s.getGold();
+		return s.getLeastGold();
+	}
+
+	public int mostGoldNeeded() {
+		Strategist s = new Strategist(playerHitPoints, boss);
+		return s.getMostGold();
 	}
 }

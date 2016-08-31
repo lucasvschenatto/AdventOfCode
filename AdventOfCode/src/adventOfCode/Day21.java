@@ -13,8 +13,8 @@ public class Day21 implements Challenge {
 
 	@Override
 	public String part2(String input) {
-		// TODO Auto-generated method stub
-		return null;
+		Solver s = new Solver(100, input);
+		return String.valueOf(s.mostGoldNeeded());
 	}
 
 }

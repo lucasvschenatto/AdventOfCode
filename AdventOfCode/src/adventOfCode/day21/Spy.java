@@ -2,7 +2,7 @@ package adventOfCode.day21;
 
 import java.util.Arrays;
 
-public class Spy implements Warrior{
+public class Spy implements CharacterRole{
 	private int hitPoints;
 	private int damage;
 	private int armor;
@@ -33,12 +33,12 @@ public class Spy implements Warrior{
 		defenses++;
 	}
 	
-	public void attack(Warrior enemy) {
+	public void attack(CharacterRole enemy) {
 		enemy.defend(this.damage);
 		attacks++;
 	}
 	
-	public Warrior clone(){
+	public CharacterRole clone(){
 		return this;
 	}
 	

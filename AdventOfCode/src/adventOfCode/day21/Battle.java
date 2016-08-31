@@ -2,19 +2,19 @@ package adventOfCode.day21;
 
 public class Battle {
 
-	private Warrior player1;
-	private Warrior player2;
-	private Warrior winner;
+	private CharacterRole player1;
+	private CharacterRole player2;
+	private CharacterRole winner;
 	private boolean over;
 
-	public Battle(Warrior player1, Warrior player2) {
+	public Battle(CharacterRole player1, CharacterRole player2) {
 		this.player1 = player1.clone();
 		this.player2 = player2.clone();
 	}
 
 	public void fight() {
-		Warrior attacker = player1;
-		Warrior defender = player2;
+		CharacterRole attacker = player1;
+		CharacterRole defender = player2;
 		boolean gameOver = false;
 		while(!gameOver){
 			attacker.attack(defender);
@@ -23,14 +23,14 @@ public class Battle {
 				winner = attacker;
 			}
 			else{
-				Warrior changed = attacker;
+				CharacterRole changed = attacker;
 				attacker = defender;
 				defender = changed;
 			}
 		}
 	}
 
-	public Warrior getWinner() {
+	public CharacterRole getWinner() {
 		if(!over)
 			fight();
 		return winner;

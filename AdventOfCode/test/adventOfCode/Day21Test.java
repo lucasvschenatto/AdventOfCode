@@ -10,76 +10,76 @@ import adventOfCode.day21.Armor;
 import adventOfCode.day21.Boss;
 import adventOfCode.day21.Battle;
 import adventOfCode.day21.Item;
-import adventOfCode.day21.Player;
+import adventOfCode.day21.Warrior;
 import adventOfCode.day21.Ring;
 import adventOfCode.day21.Solver;
 import adventOfCode.day21.Spy;
 import adventOfCode.day21.Strategist;
-import adventOfCode.day21.Warrior;
+import adventOfCode.day21.CharacterRole;
 import adventOfCode.day21.Weapon;
 
 public class Day21Test {
 	public abstract static class WarriorTest{
-		protected abstract Warrior makeWarrior(int hitPoints,int damage,int armor);
+		protected abstract CharacterRole makeWarrior(int hitPoints,int damage,int armor);
 		@Test
 		public void defenseReducesHitPoints(){
-			Warrior w = makeWarrior(50,5,3);
+			CharacterRole w = makeWarrior(50,5,3);
 			w.defend(10);
 			assertEquals(43,w.getHitPoints());
 		}
 		@Test
 		public void defenseReducesAtLeastOnePoint(){
-			Warrior w = makeWarrior(100,5,999);
+			CharacterRole w = makeWarrior(100,5,999);
 			w.defend(3);
 			assertEquals(99,w.getHitPoints());
 		}
 		@Test
 		public void attackReducesEnemysHitPoints(){
-			Warrior attacker = makeWarrior(100,15,0);
-			Warrior enemy    = makeWarrior(100,0,4);
+			CharacterRole attacker = makeWarrior(100,15,0);
+			CharacterRole enemy    = makeWarrior(100,0,4);
 			attacker.attack(enemy);
 			assertEquals(100,attacker.getHitPoints());
 			assertEquals(89, enemy.getHitPoints());
 		}
 		@Test
 		public void sameDamageAndArmor_ButDifferentHitPoints_IsEqual(){
-			Warrior w1  = makeWarrior(100,13,2);
-			Warrior w2 = makeWarrior(999,13,2);
+			CharacterRole w1  = makeWarrior(100,13,2);
+			CharacterRole w2 = makeWarrior(999,13,2);
 			assertEquals(w1,w2);
 		}
 	}
 
 	public static class PlayerTest extends WarriorTest{
-		protected Warrior makeWarrior(int hitPoints,int damage,int armor){
+		protected CharacterRole makeWarrior(int hitPoints,int damage,int armor){
 			Item i = new Ring("dummy item",damage,armor);
-			return new Player(hitPoints,i);
+			return new Warrior(hitPoints,i);
 		}
-		public Player makePlayer(int hitPoints,Item...itens){
-			return new Player(hitPoints,itens);
+		public Warrior makePlayer(int hitPoints,Item...itens){
+			return new Warrior(hitPoints,itens);
 		}
 		@Test
 		public void playerHasHitPoints(){
-			Player p = makePlayer(100);
+			Warrior p = makePlayer(100);
 			assertEquals(100,p.getHitPoints());
 		}
 		@Test
 		public void givenWeaponAndRing_DamageIsTheSumOfBoth(){
 			Item w = new Weapon("Dagger",4,0);
 			Item r = new Ring("Damage +1",1,0);
-			Player p = makePlayer(100,w,r);
+			Warrior p = makePlayer(100,w,r);
 			assertEquals(5,p.getDamage());
 		}
 		@Test
 		public void givenArmorAndRing_DamageIsTheSumOfBoth(){
 			Item a = new Armor("Chainmail",0,2);
 			Item r = new Ring("Armor +1",0,1);
-			Player p = makePlayer(100,a,r);
+			Warrior p = makePlayer(100,a,r);
 			assertEquals(3,p.getArmor());
 		}
 	}
 	
 	public static class BossTest extends WarriorTest{
-		protected Warrior makeWarrior(int hitPoints,int damage, int armor){
+		protected CharacterRole makeWarrior(int hitPoints,int damage, int armor){
 			return makeBoss(hitPoints,damage,armor);
 		}
 		public Boss makeBoss(int hitPoints,int damage, int armor){
@@ -140,16 +140,16 @@ public class Day21Test {
 		}
 		@Test
 		public void winner(){
-			Warrior player = new Player(100,new Ring("dummy",15,3));
-			Warrior boss = new Boss(100,9,2);
+			CharacterRole player = new Warrior(100,new Ring("dummy",15,3));
+			CharacterRole boss = new Boss(100,9,2);
 			Battle b = new Battle(player,boss);
 
 			assertEquals(player,b.getWinner());
 		}
 		@Test
 		public void doesntChangeOriginalObject(){
-			Warrior player = new Player(100,new Ring("dummy",15,3));
-			Warrior boss = new Boss(100,9,2);
+			CharacterRole player = new Warrior(100,new Ring("dummy",15,3));
+			CharacterRole boss = new Boss(100,9,2);
 			Battle b = new Battle(player,boss);
 			b.fight();
 			assertEquals(100,player.getHitPoints());
@@ -161,16 +161,16 @@ public class Day21Test {
 		@Test
 		public void findWinningScenario(){
 			givenPlyerHitPoints_AndBoss_ItNeeds(100,new Boss(100,0,0),8);
-			givenPlyerHitPoints_AndBoss_ItNeeds(8,new Boss(12,7,2),74);
+			givenPlyerHitPoints_AndBoss_ItNeeds(8,new Boss(12,7,2),65);
 		}
 
 		private void givenPlyerHitPoints_AndBoss_ItNeeds(int pHitPoints, Boss boss,int expectedGold) {
 			Strategist s = new Strategist(pHitPoints, boss);
-			Player player = new Player(pHitPoints,s.getItems());
-			Battle b = new Battle(player,boss);
+			Warrior warrior = new Warrior(pHitPoints,s.getItems());
+			Battle b = new Battle(warrior,boss);
 			
-			assertEquals(player,b.getWinner());
-			assertEquals(Arrays.toString(s.getItems()),expectedGold,s.getGold());
+			assertEquals(warrior,b.getWinner());
+			assertEquals(Arrays.toString(s.getItems()),expectedGold,s.getLeastGold());
 		}
 	}
 	public static class SolverTest{
@@ -181,9 +181,16 @@ public class Day21Test {
 		}
 		@Test
 		public void leastAmountOfGoldFor(){
-			leastForIs(100,"Hit Points: 104\n"+"Damage: 8\n"+"Armor: 1",87);
+			leastForIs(100,"Hit Points: 104\n"+"Damage: 8\n"+"Armor: 1",78);
 		}
-
+		@Test
+		public void mostAmountOfGoldFor(){
+			mostForIs(100,"Hit Points: 104\n"+"Damage: 8\n"+"Armor: 1",148);
+		}
+		private void mostForIs(int playerH, String input, int expected) {
+			Solver s = new Solver(playerH,input);
+			assertEquals(expected,s.mostGoldNeeded());
+		}
 		private void leastForIs(int playerH, String input, int expected) {
 			Solver s = new Solver(playerH,input);
 			assertEquals(expected,s.leastGoldNeeded());

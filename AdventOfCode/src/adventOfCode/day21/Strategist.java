@@ -1,17 +1,20 @@
 package adventOfCode.day21;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Strategist {
 
 	private int pHealth;
 	private Boss boss;
-	private boolean strategyFound;
+	private boolean cheaperStrategyFound;
+	private boolean expansivierStrategyFound;
+	private boolean optionsLoaded;
+	private Set<Inventory> options;
 	private Item[] itens;
-	private int gold;
+	private int leastGold;
+	private int mostGold;
 
 	public Strategist(int pHealth, Boss boss) {
 		this.pHealth = pHealth;
@@ -19,19 +22,48 @@ public class Strategist {
 	}
 	
 	public Item[] getItems(){
-		if(!strategyFound)
+		if(!cheaperStrategyFound)
 			findCheaper();
 		return itens;
 	}
 
-	public int getGold(){
-		if(!strategyFound)
+	public int getLeastGold(){
+		if(!cheaperStrategyFound)
 			findCheaper();
-		return gold;
+		return leastGold;
 	}
+	public int getMostGold() {
+		if(!expansivierStrategyFound)
+			findExpansivier();
+		return mostGold;
+	}
+	private void findExpansivier() {
+		loadAllOptions();
+		Inventory expansivier = new Inventory(0);
+		options.forEach((inventory)->{
+			if(bossWins(inventory))
+				if(inventory.gold > expansivier.gold){
+				expansivier.weapon = inventory.weapon;
+				expansivier.armor  = inventory.armor;
+				expansivier.ring1  = inventory.ring1;
+				expansivier.ring2  = inventory.ring2;
+				expansivier.gold   = inventory.gold;
+			}
+		});
+		itens = expansivier.itens();
+		mostGold = expansivier.gold;
+	}
+
+	private boolean bossWins(Inventory inventory) {
+		Warrior warrior = new Warrior(pHealth, inventory);
+		Battle battle = new Battle(warrior,boss);
+		return boss.equals(battle.getWinner());
+	}
+
 	private void findCheaper() {
+		loadAllOptions();
 		Inventory cheaper = new Inventory(Integer.MAX_VALUE);
-		allOptions().forEach((inventory)->{
+		options.forEach((inventory)->{
 			if(playerWins(inventory))
 				if(inventory.gold < cheaper.gold){
 				cheaper.weapon = inventory.weapon;
@@ -41,34 +73,25 @@ public class Strategist {
 				cheaper.gold   = inventory.gold;
 			}
 		});
-		itens = inventoryItens(cheaper);
-		gold = cheaper.gold;
+		itens = cheaper.itens();
+		leastGold = cheaper.gold;
 	}
 
-	private Item[] inventoryItens(Inventory i) {
-		List<Item> itens = new ArrayList<Item>();
-		if(i.weapon != null)
-			itens.add(i.weapon);
-		if(i.armor != null)
-			itens.add(i.armor);
-		if(i.ring1 != null)
-			itens.add(i.ring1);
-		if(i.ring2 != null)
-			itens.add(i.ring2);
-		return itens.toArray(new Item[]{});
+	
+
+	private boolean playerWins(Inventory inventory) {
+		Warrior warrior = new Warrior(pHealth, inventory);
+		Battle battle = new Battle(warrior,boss);
+		return warrior.equals(battle.getWinner());
 	}
 
-	private boolean playerWins(Inventory equip) {
-		Player player = new Player(pHealth, equip);
-		Battle battle = new Battle(player,boss);
-		return player.equals(battle.getWinner());
-	}
-
-	private Iterable<Inventory> allOptions() {
-		Set<Weapon> weapons = Store.getWeapons();
-		Set<Inventory> options = new HashSet<Inventory>();
-		weapons.forEach((weapon)->options.addAll(optionsForWeapon(weapon, Store.getArmors(), Store.getRings())));
-		return options;
+	private void loadAllOptions() {
+		if(!optionsLoaded){
+			options = new HashSet<Inventory>();
+			Set<Weapon> weapons = Store.getWeapons();
+			weapons.forEach((weapon)->options.addAll(optionsForWeapon(weapon, Store.getArmors(), Store.getRings())));
+			optionsLoaded = true;
+		}
 	}
 	
 	private Set<Inventory> optionsForWeapon(Weapon weapon, Set<Armor> armors, Set<Ring> rings) {
@@ -84,7 +107,20 @@ public class Strategist {
 	private Set<Inventory> optionsForArmor(Weapon weapon, Armor armor, Set<Ring> rings) {
 		Set<Inventory> options = new HashSet<Inventory>();
 		rings.forEach((ring)->{
+			options.add(new Inventory(weapon,ring));
 			options.add(new Inventory(weapon,armor,ring));
+			options.addAll(optionsForOneRing(weapon, armor, ring, rings));
+		});
+		return options;
+	}
+
+	private Collection<? extends Inventory> optionsForOneRing(Weapon weapon, Armor armor, Ring ring1, Set<Ring> rings) {
+		Set<Inventory> options = new HashSet<Inventory>();
+		rings.forEach((ring2)->{
+			if(!ring2.equals(ring1)){
+				options.add(new Inventory(weapon,ring1,ring2));
+				options.add(new Inventory(weapon,armor,ring1,ring2));
+			}
 		});
 		return options;
 	}

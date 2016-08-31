@@ -2,7 +2,7 @@ package adventOfCode.day21;
 
 import java.util.Arrays;
 
-public class Boss implements Warrior{
+public class Boss implements CharacterRole{
 	
 	private int hitPoints;
 	private int damage;
@@ -31,7 +31,7 @@ public class Boss implements Warrior{
 		this.hitPoints -= realDamage;
 	}
 	
-	public void attack(Warrior enemy) {
+	public void attack(CharacterRole enemy) {
 		enemy.defend(this.damage);
 	}
 	
@@ -43,7 +43,7 @@ public class Boss implements Warrior{
 		return this.damage == other.damage && this.armor == other.armor;
 	}
 
-	public Warrior clone(){
+	public CharacterRole clone(){
 		return new Boss(hitPoints,damage,armor);
 	}
 	
