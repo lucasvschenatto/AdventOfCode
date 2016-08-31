@@ -1,8 +1,6 @@
 package adventOfCode.day19;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Laboratory {
 	protected final String startingMatter;
@@ -13,39 +11,16 @@ public class Laboratory {
 		this.replacements = i.getFissions();
 		this.goalMolecule = startingMatter;
 		this.startingMatter = i.getMolecule();
-//		this.replacements = i.getFusions();
-//		this.goalMolecule = i.getMolecule();
-//		this.startingMatter = startingMatter;
 	}
 
 	public int stepsToProduceMolecule() {
-		Pot oldpot = new Pot(new HashSet<String>());
-		Pot newPot = new Pot(new HashSet<String>());
-		oldpot.molecules.add(new String(startingMatter));
-		boolean finished = startingMatter.toString().equals(goalMolecule.toString());
 		int steps = 0;
-		while(!finished){
-			oldpot.molecules.forEach((molecule)->{
-				newPot.molecules.addAll(new SingleManipulation(replacements,molecule).getPossibleMolecules());
-				});
-			steps++;
-//			newPot.molecules.removeIf((molecule)->{return molecule.length() > goalMolecule.length();});
-			if(newPot.molecules.contains(goalMolecule))
-				finished = true;
-			else{
-				oldpot.molecules = newPot.molecules;
-				newPot.molecules = new HashSet<String>();
-			}
+		String molecule = startingMatter;
+		while(!molecule.equals(goalMolecule)){
+			Replacer r = new Replacer(replacements,molecule);
+			molecule = r.replaceAll();
+			steps += r.getSteps();
 		}
 		return steps;
-	}
-	protected class Pot{
-		public Set<String> molecules;
-		Pot(Set<String> molecules){
-			this.molecules = molecules;
-		}
-		public String toString(){
-			return molecules.toString();
-		}
 	}
 }

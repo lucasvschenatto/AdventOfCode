@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class NuclearManipulation {
+public class NuclearManipulation {
 	protected final List<Replacement> replacements;
 	protected String moleculeFrom;
 	protected Set<String> possibleMolecules;
-	protected NuclearManipulation(List<Replacement> replacements, String moleculeFrom) {
+	public NuclearManipulation(List<Replacement> replacements, String moleculeFrom) {
 		this.replacements = replacements;
 		this.moleculeFrom = moleculeFrom;
 	}
