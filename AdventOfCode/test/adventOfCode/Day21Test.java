@@ -19,67 +19,67 @@ import adventOfCode.day21.CharacterRole;
 import adventOfCode.day21.Weapon;
 
 public class Day21Test {
-	public abstract static class WarriorTest{
-		protected abstract CharacterRole makeWarrior(int hitPoints,int damage,int armor);
+	public abstract static class CharacterTest{
+		protected abstract CharacterRole makeRole(int hitPoints,int damage,int armor);
 		@Test
 		public void defenseReducesHitPoints(){
-			CharacterRole w = makeWarrior(50,5,3);
+			CharacterRole w = makeRole(50,5,3);
 			w.defend(10);
 			assertEquals(43,w.getHitPoints());
 		}
 		@Test
 		public void defenseReducesAtLeastOnePoint(){
-			CharacterRole w = makeWarrior(100,5,999);
+			CharacterRole w = makeRole(100,5,999);
 			w.defend(3);
 			assertEquals(99,w.getHitPoints());
 		}
 		@Test
 		public void attackReducesEnemysHitPoints(){
-			CharacterRole attacker = makeWarrior(100,15,0);
-			CharacterRole enemy    = makeWarrior(100,0,4);
+			CharacterRole attacker = makeRole(100,15,0);
+			CharacterRole enemy    = makeRole(100,0,4);
 			attacker.attack(enemy);
 			assertEquals(100,attacker.getHitPoints());
 			assertEquals(89, enemy.getHitPoints());
 		}
 		@Test
 		public void sameDamageAndArmor_ButDifferentHitPoints_IsEqual(){
-			CharacterRole w1  = makeWarrior(100,13,2);
-			CharacterRole w2 = makeWarrior(999,13,2);
+			CharacterRole w1  = makeRole(100,13,2);
+			CharacterRole w2 = makeRole(999,13,2);
 			assertEquals(w1,w2);
 		}
 	}
 
-	public static class PlayerTest extends WarriorTest{
-		protected CharacterRole makeWarrior(int hitPoints,int damage,int armor){
+	public static class WarriorTest extends CharacterTest{
+		protected CharacterRole makeRole(int hitPoints,int damage,int armor){
 			Item i = new Ring("dummy item",damage,armor);
-			return new Warrior(hitPoints,i);
+			return makeWarrior(hitPoints,i);
 		}
-		public Warrior makePlayer(int hitPoints,Item...itens){
+		public Warrior makeWarrior(int hitPoints,Item...itens){
 			return new Warrior(hitPoints,itens);
 		}
 		@Test
 		public void playerHasHitPoints(){
-			Warrior p = makePlayer(100);
+			Warrior p = makeWarrior(100);
 			assertEquals(100,p.getHitPoints());
 		}
 		@Test
 		public void givenWeaponAndRing_DamageIsTheSumOfBoth(){
 			Item w = new Weapon("Dagger",4,0);
 			Item r = new Ring("Damage +1",1,0);
-			Warrior p = makePlayer(100,w,r);
+			Warrior p = makeWarrior(100,w,r);
 			assertEquals(5,p.getDamage());
 		}
 		@Test
-		public void givenArmorAndRing_DamageIsTheSumOfBoth(){
+		public void givenArmorAndRing_ArmorIsTheSumOfBoth(){
 			Item a = new Armor("Chainmail",0,2);
 			Item r = new Ring("Armor +1",0,1);
-			Warrior p = makePlayer(100,a,r);
+			Warrior p = makeWarrior(100,a,r);
 			assertEquals(3,p.getArmor());
 		}
 	}
 	
-	public static class BossTest extends WarriorTest{
-		protected CharacterRole makeWarrior(int hitPoints,int damage, int armor){
+	public static class BossTest extends CharacterTest{
+		protected CharacterRole makeRole(int hitPoints,int damage, int armor){
 			return makeBoss(hitPoints,damage,armor);
 		}
 		public Boss makeBoss(int hitPoints,int damage, int armor){
