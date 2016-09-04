@@ -150,7 +150,7 @@ public class Day22Test {
 //			assertEquals(3,p.getArmor());
 //		}
 	}
-	
+
 	public static class BattleTest{
 		SpyRole spy1;
 		SpyRole spy2;
