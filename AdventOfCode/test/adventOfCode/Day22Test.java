@@ -16,17 +16,26 @@ public class Day22Test {
 		protected abstract int expectedArmor();
 		protected abstract int expectedMana();
 		@Test
-		public void expectsCost(){assertEquals(expectedCost(),makeSpell().getCost());}
+		public void expectsAttributeCost(){assertEquals(expectedCost(),makeSpell().getCost());}
 		@Test
-		public void expectsTurns(){assertEquals(expectedTurns(),makeSpell().getTurns());}
+		public void expectsAttributeTurns(){assertEquals(expectedTurns(),makeSpell().getTurns());}
 		@Test
-		public void expectsDamage(){assertEquals(expectedDamage(),makeSpell().getDamage());}
+		public void expectsAttributeDamage(){assertEquals(expectedDamage(),makeSpell().getDamage());}
 		@Test
-		public void expectsHeal(){assertEquals(expectedHeal(),makeSpell().getHeal());}
+		public void expectsAttributeHeal(){assertEquals(expectedHeal(),makeSpell().getHeal());}
 		@Test
-		public void expectsArmor(){assertEquals(expectedArmor(),makeSpell().getArmor());}
+		public void expectsAttributeArmor(){assertEquals(expectedArmor(),makeSpell().getArmor());}
 		@Test
-		public void expectsMana(){assertEquals(expectedMana(),makeSpell().getMana());}
+		public void expectsAttributeMana(){assertEquals(expectedMana(),makeSpell().getMana());}
+		@Test@Ignore
+		public void turnsThatLastInBattle(){
+			Spell spell = makeSpell();
+			Wizard w = new Wizard(100, 500, 0, spell);
+			Boss bo = new Boss(100,10,0);
+			SpyBattle b = new SpyBattle(w, bo);
+			b.fight();
+			assertEquals(expectedTurns(),b.numberOfTurnsWithEffect(spell));
+		}
 	}
 	public static class MagicMissileTest extends SpellTest{
 		public Spell makeSpell()       {return new MagicMissile();}
@@ -121,34 +130,26 @@ public class Day22Test {
 
 	public static class WizardTest extends WarriorTest{
 		protected CharacterRole makeRole(int hitPoints,int damage,int armor){
-			Spell s = new SpySpell(damage);
+			Spell s = new StubSpell(damage);
 			return makeWizard(hitPoints,500,armor, s);
 		}
-		private Wizard makeWizard(int hitPoints,int mana,int armor, Spell spell){
+		private static Wizard makeWizard(int hitPoints,int mana,int armor, Spell spell){
 			return new Wizard(hitPoints,mana, armor, spell);
 		}
 		public static Wizard makeWizard(int hitPoints, int mana, int armor){
-			return new Wizard(hitPoints,mana,armor, new SpySpell(10));
+			return makeWizard(hitPoints,mana,armor, new StubSpell(10));
 		}
 		@Test
 		public void wizardHasHitPoints(){
-			Wizard p = makeWizard(100,50,70);
-			assertEquals(100,p.getHitPoints());
+			Wizard w = makeWizard(100,50,70);
+			assertEquals(100,w.getHitPoints());
 		}
-//		@Test
-//		public void givenWeaponAndRing_DamageIsTheSumOfBoth(){
-//			Item w = new Weapon("Dagger",4,0);
-//			Item r = new Ring("Damage +1",1,0);
-//			Wizard p = makeWizard(100,w,r);
-//			assertEquals(5,p.getDamage());
-//		}
-//		@Test
-//		public void givenArmorAndRing_DamageIsTheSumOfBoth(){
-//			Item a = new Armor("Chainmail",0,2);
-//			Item r = new Ring("Armor +1",0,1);
-//			Wizard p = makeWizard(100,a,r);
-//			assertEquals(3,p.getArmor());
-//		}
+		@Test
+		public void wizardInBattleKnowsBattle(){
+			Wizard wizard = makeWizard(100,50,70);
+			Battle b = new Battle(wizard,new SpyRole());
+			assertEquals(b,wizard.getBattle());
+		}
 	}
 
 	public static class BattleTest{

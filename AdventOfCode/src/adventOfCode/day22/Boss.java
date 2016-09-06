@@ -51,4 +51,6 @@ public class Boss implements CharacterRole{
 		return this.getClass().getSimpleName() + Arrays.toString(new int[]{hitPoints,damage,armor});
 	}
 
+	public void setBattle(Battle battle) {}
+
 }

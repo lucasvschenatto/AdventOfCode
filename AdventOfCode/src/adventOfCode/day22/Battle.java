@@ -1,32 +1,51 @@
 package adventOfCode.day22;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Battle {
 
-	private CharacterRole player1;
-	private CharacterRole player2;
+	private CharacterRole wizard;
+	private CharacterRole boss;
 	private CharacterRole winner;
 	private boolean over;
+	private List<Spell> activeSpells;
 
-	public Battle(CharacterRole player1, CharacterRole player2) {
-		this.player1 = player1.clone();
-		this.player2 = player2.clone();
+	public Battle(CharacterRole wizard, CharacterRole boss) {
+		wizard.setBattle(this);
+		this.wizard = wizard.clone();
+		this.boss = boss.clone();
+		activeSpells = new ArrayList<Spell>();
 	}
 
 	public void fight() {
-		CharacterRole attacker = player1;
-		CharacterRole defender = player2;
 		boolean gameOver = false;
 		while(!gameOver){
-			attacker.attack(defender);
-			if(defender.getHitPoints() <= 0){
-				gameOver = true;
-				winner = attacker;
-			}
-			else{
-				CharacterRole changed = attacker;
-				attacker = defender;
-				defender = changed;
-			}
+			gameOver = playRound();
+		}
+	}
+
+	private boolean playRound() {
+		playTurn(wizard,boss);
+		if(boss.getHitPoints() <= 0){
+			winner = wizard;
+			return true;
+		}
+		playTurn(boss,wizard);
+		if(wizard.getHitPoints() <= 0){
+			winner = boss;
+			return true;
+		}
+		return false;
+	}
+	private void playTurn(CharacterRole attacker,CharacterRole defender){
+		applySpellsEffects();
+		attacker.attack(defender);
+	}
+
+	private void applySpellsEffects() {
+		for(Spell spell: activeSpells){
+			spell.cast(wizard, boss);
 		}
 	}
 

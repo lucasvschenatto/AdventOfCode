@@ -8,7 +8,10 @@ public class SpyRole implements CharacterRole{
 	private int armor;
 	private int attacks;
 	private int defenses;
-
+	
+	public SpyRole(){
+		this(100,100,100);
+	}
 	public SpyRole(int hitPoints, int damage, int armor) {
 		this.hitPoints = hitPoints;
 		this.damage = damage;
@@ -53,6 +56,7 @@ public class SpyRole implements CharacterRole{
 	public int getDefenses() {
 		return defenses;
 	}
+	public void setBattle(Battle battle) {}
 	
 
 }

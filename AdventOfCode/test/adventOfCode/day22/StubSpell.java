@@ -1,8 +1,8 @@
 package adventOfCode.day22;
 
-public class SpySpell implements Spell {
+public class StubSpell implements Spell {
 	int damage;
-	public SpySpell(int damage){
+	public StubSpell(int damage){
 		this.damage = damage;
 	}
 	@Override
@@ -22,7 +22,7 @@ public class SpySpell implements Spell {
 	@Override
 	public int getDamage() {
 		// TODO Auto-generated method stub
-		return 0;
+		return damage;
 	}
 	@Override
 	public int getHeal() {
