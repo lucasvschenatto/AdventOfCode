@@ -1,7 +1,7 @@
 package adventOfCode;
 
 import static org.junit.Assert.*;
-
+import static org.hamcrest.CoreMatchers.*;
 import org.junit.*;
 
 import adventOfCode.day22.*;
@@ -27,14 +27,14 @@ public class Day22Test {
 		public void expectsAttributeArmor(){assertEquals(expectedArmor(),makeSpell().getArmor());}
 		@Test
 		public void expectsAttributeMana(){assertEquals(expectedMana(),makeSpell().getMana());}
-		@Test@Ignore
+		@Test
 		public void turnsThatLastInBattle(){
 			Spell spell = makeSpell();
 			Wizard w = new Wizard(100, 500, 0, spell);
-			Boss bo = new Boss(100,10,0);
-			SpyBattle b = new SpyBattle(w, bo);
+			Boss bo = new Boss(1000,10,0);
+			StubBattle b = new StubBattle(w, bo);
 			b.fight();
-			assertEquals(expectedTurns(),b.numberOfTurnsWithEffect(spell));
+			assertThat(expectedTurns(),equalTo(b.numberOfTurnsWithEffect(spell)));
 		}
 	}
 	public static class MagicMissileTest extends SpellTest{
@@ -100,6 +100,7 @@ public class Day22Test {
 		public void attackReducesEnemysHitPoints(){
 			CharacterRole attacker = makeRole(100,15,0);
 			CharacterRole enemy    = makeRole(100,0,4);
+			new Battle(attacker,enemy);
 			attacker.attack(enemy);
 			assertEquals(100,attacker.getHitPoints());
 			assertEquals(89, enemy.getHitPoints());
@@ -140,6 +141,13 @@ public class Day22Test {
 			return makeWizard(hitPoints,mana,armor, new StubSpell(10));
 		}
 		@Test
+		public void cloneCopiesAllFields(){
+			Wizard wizard1 = makeWizard(100,50,70);
+			new Battle(wizard1,wizard1);
+			Wizard wizard2 = (Wizard) wizard1.clone();
+			assertThat(wizard1,equalTo(wizard2));
+		}
+		@Test
 		public void wizardHasHitPoints(){
 			Wizard w = makeWizard(100,50,70);
 			assertEquals(100,w.getHitPoints());
@@ -149,6 +157,14 @@ public class Day22Test {
 			Wizard wizard = makeWizard(100,50,70);
 			Battle b = new Battle(wizard,new SpyRole());
 			assertEquals(b,wizard.getBattle());
+		}
+		@Test
+		public void wizardCastSpellIntoBattle(){
+			Spell spell = new StubSpell(100);
+			Wizard wizard = makeWizard(100,50,70,spell);
+			StubBattle b = new StubBattle(wizard,new SpyRole());
+			b.fight();
+			assertThat(b.getSpellsCast(), hasItem(spell));
 		}
 	}
 

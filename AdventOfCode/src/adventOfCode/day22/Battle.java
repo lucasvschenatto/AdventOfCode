@@ -9,7 +9,7 @@ public class Battle {
 	private CharacterRole boss;
 	private CharacterRole winner;
 	private boolean over;
-	private List<Spell> activeSpells;
+	protected List<Spell> activeSpells;
 
 	public Battle(CharacterRole wizard, CharacterRole boss) {
 		wizard.setBattle(this);
@@ -53,6 +53,10 @@ public class Battle {
 		if(!over)
 			fight();
 		return winner;
+	}
+
+	public void receiveSpell(Spell spell) {
+		activeSpells.add(spell);
 	}
 
 }

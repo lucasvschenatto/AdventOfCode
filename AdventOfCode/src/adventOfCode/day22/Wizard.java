@@ -24,19 +24,29 @@ public class Wizard implements CharacterRole {
 
 	public void attack(CharacterRole enemy) {
 		spell.cast(this,enemy);
+		battle.receiveSpell(spell);
 	}
 	public void setBattle(Battle battle){
 		this.battle = battle;
 	}
 
 	public CharacterRole clone() {
-		return new Wizard(hitPoints, mana, armor, spell);
+		Wizard newWizard = new Wizard(hitPoints, mana, armor, spell);
+		newWizard.setBattle(this.battle);
+		return newWizard;
 	}
 	
 	
 	public boolean equals(Object other){
-		return this.getClass().isInstance(other);
+		return this.getClass().isInstance(other) && equalsBattle((Wizard)other);
 	}
+	private boolean equalsBattle(Wizard other) {
+		if(this.battle == null && other.battle == null)
+			return true;
+		else
+			return this.battle.equals(other.battle);
+	}
+
 	public Battle getBattle() {
 		return battle;
 	}
