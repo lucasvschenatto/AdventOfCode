@@ -7,12 +7,16 @@ public class Day23 implements Challenge {
 
 	@Override
 	public String part1(String input) {
-		return "1"; //Too easy
+		Computer c = new Computer(0,0);
+		c.run(input);
+		return String.valueOf( c.getB());
 	}
 
 	@Override
 	public String part2(String input) {
-		return "";
+		Computer c = new Computer(1,0);
+		c.run(input);
+		return String.valueOf( c.getB());
 	}
 
 }
