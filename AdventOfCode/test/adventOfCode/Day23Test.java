@@ -1,30 +1,13 @@
 package adventOfCode;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import org.junit.*;
 import adventOfCode.day23.*;
 
 public class Day23Test {
 	private Computer comp;
-	private void givenA(int a){
-		given(a,0);
-	}
-	private void givenB(int b){
-		given(0,b);
-	}
-	private void given(int a, int b){
-		comp = new Computer(a,b);
-	}
-	private void whenRun(String program){
-		comp.run(program);
-	}
-	private void thenA(int a){
-		assertEquals(a,comp.getA());
-	}
-
-	private void thenB(int b){
-		assertEquals(b,comp.getB());
-	}
+	
 	@Test
 	public void hlfA() {
 		givenA(2);
@@ -114,5 +97,25 @@ public class Day23Test {
 				+ "\ninc a"
 				+ "\ninc a");
 		thenA(1);
+	}
+	
+	private void givenA(int a){
+		given(a,0);
+	}
+	private void givenB(int b){
+		given(0,b);
+	}
+	private void given(int a, int b){
+		comp = new Computer(a,b);
+	}
+	private void whenRun(String program){
+		comp.run(program);
+	}
+	private void thenA(int a){
+		assertThat(comp.getA(),equalTo(a));
+	}
+
+	private void thenB(int b){
+		assertThat(comp.getB(),equalTo(b));
 	}
 }
