@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public class Shield extends GenericSpell {
 	private int armor;

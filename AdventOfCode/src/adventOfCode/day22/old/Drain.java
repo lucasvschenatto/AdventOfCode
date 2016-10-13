@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public class Drain extends GenericSpell{
 	private int damage;

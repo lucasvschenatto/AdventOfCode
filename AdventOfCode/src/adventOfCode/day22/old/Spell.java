@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public interface Spell {
 	public void cast(CharacterRole author, CharacterRole enemy);

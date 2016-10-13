@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public interface CharacterRole extends Cloneable {
 	public int getHitPoints();

@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public abstract class GenericSpell implements Spell {
 	protected int cost;

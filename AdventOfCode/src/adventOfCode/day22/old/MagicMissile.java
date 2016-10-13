@@ -1,11 +1,12 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
-public class Poison extends GenericSpell {
+public class MagicMissile extends GenericSpell{
 	private int damage;
-	public Poison() {
-		super(173,6);
-		this.damage = 3;
+	public MagicMissile() {
+		super(53,0);
+		this.damage = 4;
 	}
+	
 	public int getDamage(){return damage;}
 	public int getHeal()  {return 0;}
 	public int getArmor() {return 0;}

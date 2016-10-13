@@ -1,4 +1,4 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
 
 public class Recharge extends GenericSpell {
 	private int mana;

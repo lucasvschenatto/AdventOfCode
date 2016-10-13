@@ -1,4 +1,7 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
+
+import adventOfCode.day22.old.CharacterRole;
+import adventOfCode.day22.old.Spell;
 
 public class StubSpell implements Spell {
 	int damage;

@@ -1,4 +1,8 @@
-package adventOfCode.day22;
+package adventOfCode.day22.old;
+
+import adventOfCode.day22.old.Battle;
+import adventOfCode.day22.old.CharacterRole;
+import adventOfCode.day22.old.Spell;
 
 public class StubBattle extends Battle {
 	public StubBattle(CharacterRole player1, CharacterRole player2) {
