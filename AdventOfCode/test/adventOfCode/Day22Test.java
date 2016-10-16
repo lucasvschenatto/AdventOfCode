@@ -7,13 +7,14 @@ import org.junit.*;
 import adventOfCode.day22.*;
 
 public class Day22Test {
-	private static final int POISON = 173;
-	public static int MISSILE = 53;
-	public static int DRAIN = 73;
-	public static int SHIELD = 113;
+	private static final int MISSILE  = 53;
+	private static final int DRAIN    = 73;
+	private static final int SHIELD   = 113;
+	private static final int POISON   = 173;
+	private static final int RECHARGE = 229;
 	private Wizard wizard;
 	private Boss boss;
-	Battle battle;
+	Strategist strategist;
 
 	@Test
 	public void magicMissile(){
@@ -56,7 +57,7 @@ public class Day22Test {
 	
 	@Test
 	public void shieldLasts6Turns(){
-		int mana = SHIELD+MISSILE*4+SHIELD+MISSILE;
+		int mana = SHIELD+POISON+MISSILE*2;
 		givenWizard(7,mana);
 		givenBoss(20,8);
 		whenFight();
@@ -64,44 +65,57 @@ public class Day22Test {
 	}
 	
 	@Test
-	public void manaSteps(){
-		stepIs(1,MISSILE);
-		stepIs(2,DRAIN);
-		stepIs(3,MISSILE*2);
-	}
-	
-	private void stepIs(int count, int expected) {
-		ManaStep m = new ManaStep();
-		int actual = 0;
-		for(int i = 1; i<= count; i++)
-			actual = m.next();
-		assertThat(actual,equalTo(expected));
-	}
-
-	@Test@Ignore
-	public void minimumDamageInWizardIsOne(){
-		int mana = SHIELD+MISSILE*4+SHIELD+MISSILE;
+	public void FindOptimalSolution(){
+		int mana = SHIELD+POISON+MISSILE*2;
 		givenWizard(7,mana);
 		givenBoss(20,7);
 		whenFight();
 		manaSpentToWinIs(mana);
 	}
 
-	@Test@Ignore
+	@Test
 	public void poison(){
 		int mana = POISON+MISSILE;
 		givenWizard(2,mana);
-		givenBoss(10,1);
+		givenBoss(11,1);
+		whenFight();
+		manaSpentToWinIs(mana);
+	}
+	
+	@Test
+	public void recharge(){
+		int mana = RECHARGE+MISSILE*2+POISON+MISSILE*3;
+		givenWizard(11,RECHARGE);
+		givenBoss(36,1);
+		whenFight();
+		manaSpentToWinIs(mana);
+	}
+	
+	@Test
+	public void acceptance1(){
+		int mana = RECHARGE+SHIELD+DRAIN+POISON+MISSILE;
+		givenWizard(10,250);
+		givenBoss(14,8);
+		whenFight();
+		manaSpentToWinIs(mana);
+	}
+	
+	@Test
+	public void acceptance2(){
+		int mana = POISON+MISSILE;
+		givenWizard(10,250);
+		givenBoss(13,8);
 		whenFight();
 		manaSpentToWinIs(mana);
 	}
 
 	private void manaSpentToWinIs(int expected) {
-		assertThat(battle.manaSpent(),equalTo(expected));
+		int actual = strategist.leastManaNeeded();
+		assertThat(strategist.bestWayFound(),actual,equalTo(expected));
 	}
 
 	private void whenFight() {
-		battle = new Battle(wizard,boss);
+		strategist = new Strategist(wizard,boss);
 	}
 
 	private void givenBoss(int health, int damage) {

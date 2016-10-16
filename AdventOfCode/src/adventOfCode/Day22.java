@@ -7,9 +7,10 @@ public class Day22 implements Challenge {
 
 	@Override
 	public String part1(String input) {
-		return " ";
-//		Solver s = new Solver(100, input);
-//		return String.valueOf(s.leastGoldNeeded());
+		Strategist s = new Strategist(new Wizard(50,500),new Boss(71,10));
+		int i = s.leastManaNeeded();
+		System.out.println(s.bestWayFound());
+		return String.valueOf(i);
 	}
 
 	@Override
