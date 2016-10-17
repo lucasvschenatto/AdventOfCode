@@ -108,6 +108,22 @@ public class Day22Test {
 		whenFight();
 		manaSpentToWinIs(mana);
 	}
+	
+	@Test
+	public void acceptancePart1(){
+		givenWizard(50,500);
+		givenBoss(71,10);
+		whenFight();
+		manaSpentToWinIs(1824);
+	}
+	
+	@Test@Ignore
+	public void acceptancePart2(){
+		givenWizard(50,500);
+		givenBoss(71,10);
+		whenFight();
+		manaSpentToWinIs(1937);
+	}
 
 	private void manaSpentToWinIs(int expected) {
 		int actual = strategist.leastManaNeeded();
