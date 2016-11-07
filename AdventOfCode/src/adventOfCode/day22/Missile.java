@@ -1,105 +1,80 @@
 package adventOfCode.day22;
 
 public class Missile extends Spell{
-	@Override
-	public int getCost() {
-		return 53;
+	public Missile(){
+		cost = 53;
 	}
 	@Override
-	public Spell next(int remainingMana) {
+	public Spell next() {
 		return new Drain();
 	}
 
 	@Override
-	public int cast(Wizard wizard, Boss boss) {
-		wizard.mana -= getCost();
-		boss.health -= 4;
-		return getCost();
+	public boolean cast(State state) {
+		boolean success = super.cast(state);
+		state.wizard.mana -= cost;
+		state.spent += cost;
+		state.boss.health -= 4;
+		return success;
 	}
-
-	@Override
-	public boolean isActive() {
-		return false;
-	}
-
-	@Override
-	public void applyEffect(Wizard wizard, Boss boss) {}
 	
-	
-	@Override
-	public Spell clone() {
-		return new Missile();
-	}
-
-
 	private class Drain extends Spell{
-		@Override
-		public int getCost() {
-			return 73;
+		public Drain(){
+			cost = 73;
 		}
 		@Override
-		public Spell next(int remainingMana) {
+		public Spell next() {
 			return new Shield();
 		}
 
 		@Override
-		public int cast(Wizard wizard, Boss boss) {
-			wizard.mana -= getCost();
-			boss.health -= 2;
-			wizard.health += 2;
-			return getCost();
+		public boolean cast(State state) {
+			boolean success = super.cast(state);
+			state.spent += cost;
+			state.wizard.mana -= cost;
+			state.wizard.health += 2;
+			state.boss.health -= 2;
+			return success;
 		}
-
-		@Override
-		public boolean isActive() {
-			return false;
-		}
-
-		@Override
-		public void applyEffect(Wizard wizard, Boss boss) {}
-
-		@Override
-		public Spell clone() {
-			return new Drain();
+		public String toString(){
+			return super.toString()+"-"+turns;
 		}
 	}
-	private class Shield extends Spell{
+	public class Shield extends Spell{
 		public Shield(){
 			turns = 6;
-		}
-
-		@Override
-		public int getCost() {
-			return 113;
+			cost = 113;
 		}
 		@Override
-		public Spell next(int remainingMana) {
+		public Spell next() {
 			return new Poison();
 		}
 
 		@Override
-		public int cast(Wizard wizard, Boss boss) {
-			wizard.mana -= getCost();
-			wizard.armor = 7;
-			return getCost();
+		public boolean cast(State state) {
+			boolean success = super.cast(state);
+			if(success){
+				state.spent += cost;
+				state.wizard.mana -= cost;
+				state.wizard.armor = 7;
+			}
+			return success;
 		}
 
 		@Override
-		public boolean isActive() {
-			return turns > 0;
-		}
-
-		@Override
-		public void applyEffect(Wizard wizard, Boss boss) {
+		public void applyEffect(State state) {
 			turns--;
 			if(turns == 0)
-				wizard.armor = 0;
+				state.wizard.armor = 0;
 		}
 		@Override
 		public Spell clone() {
 			Shield s = new Shield();
 			s.turns = this.turns;
 			return s;
+		}
+		public String toString(){
+			return super.toString()+"-"+turns;
 		}
 	}
 	

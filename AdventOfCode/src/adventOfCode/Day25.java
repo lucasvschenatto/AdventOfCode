@@ -16,6 +16,6 @@ public class Day25 implements Challenge {
 
 	@Override
 	public String part2(String input) {
-		return "";
+		return "finished!";
 	}
 }

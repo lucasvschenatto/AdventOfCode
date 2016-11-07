@@ -3,27 +3,27 @@ package adventOfCode.day22;
 public class Poison extends Spell{
 	public Poison(){
 		turns = 6;
+		cost = 173;
 	}
 	@Override
-	public Spell next(int remainingMana) {
+	public Spell next() {
 		return new Recharge();
 	}
 
 	@Override
-	public int cast(Wizard wizard, Boss boss) {
-		wizard.mana -= getCost();
-		return getCost();
+	public boolean cast(State state) {
+		boolean success = super.cast(state);
+		if(success){
+			state.wizard.mana -= cost;
+			state.spent += cost;
+		}
+		return success;
 	}
 
 	@Override
-	public boolean isActive() {
-		return turns > 0;
-	}
-
-	@Override
-	public void applyEffect(Wizard wizard, Boss boss) {
+	public void applyEffect(State state) {
 		turns--;
-		boss.health -= 3;
+		state.boss.health -= 3;
 	}
 	@Override
 	public Spell clone() {
@@ -31,8 +31,7 @@ public class Poison extends Spell{
 		p.turns = this.turns;
 		return p;
 	}
-	@Override
-	public int getCost() {
-		return 173;
+	public String toString(){
+		return super.toString()+"-"+turns;
 	}
 }
