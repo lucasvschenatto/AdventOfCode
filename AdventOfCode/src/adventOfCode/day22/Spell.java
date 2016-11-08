@@ -1,5 +1,7 @@
 package adventOfCode.day22;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class Spell {
 	protected int turns;
 	protected int cost;
@@ -10,26 +12,34 @@ public class Spell {
 		return new Spell();
 	}
 	public boolean cast(State state){
-		boolean success = state.wizard.mana >= cost;
-		boolean found = false;
-		for(Spell s: state.activeSpells){
-			if(this.getClass().equals(s.getClass())){
-				found = true;
-				if(s.turns > 0)
-					success = false;
+		if( state.wizard.mana >= cost){
+			state.wizard.mana -= cost;
+			state.spent += cost;
+			boolean success = true;
+			boolean found = false;
+			for(Spell s: state.activeSpells){
+				if(this.getClass().equals(s.getClass())){
+					found = true;
+					if(s.turns > 0)
+						success = false;
+				}
 			}
+			if(!found && this.turns > 0)
+				state.activeSpells.add(this);
+			return success;
 		}
-		if(!found && this.turns > 0)
-			state.activeSpells.add(this);
-		return success;
+		return false;
 	}
 	public void applyEffect(State state){
 
 	}
 	public Spell clone(){
-		Spell s = new Spell();
-		s.turns = this.turns;
-		return s;
+		Spell clone = null;
+		try {
+			clone = this.getClass().getConstructor(null).newInstance(null);
+			clone.turns = this.turns;
+		} catch (Exception ignored) {}
+		return clone;
 	}
 	
 	public String toString(){

@@ -9,7 +9,6 @@ public class Day22 implements Challenge {
 	public String part1(String input) {
 		Strategist s = new Strategist(new Wizard(50,500),new Boss(71,10));
 		int i = s.leastManaNeeded();
-		System.out.println(s.bestWayFound());
 		return String.valueOf(i);
 	}
 

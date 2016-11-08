@@ -1,19 +1,20 @@
 package adventOfCode.day22;
 
-public class Poison extends Spell{
-	public Poison(){
+public class Shield extends Spell{
+	public Shield(){
 		this.turns = 6;
-		this.cost = 173;
+		this.cost = 113;
 	}
 	@Override
 	public Spell next() {
-		return new Recharge();
+		return new Poison();
 	}
 
 	@Override
 	public boolean cast(State state) {
 		boolean success = super.cast(state);
 		if(success){
+			state.wizard.armor = 7;
 		}
 		return success;
 	}
@@ -21,6 +22,7 @@ public class Poison extends Spell{
 	@Override
 	public void applyEffect(State state) {
 		turns--;
-		state.boss.health -= 3;
+		if(turns == 0)
+			state.wizard.armor = 0;
 	}
 }

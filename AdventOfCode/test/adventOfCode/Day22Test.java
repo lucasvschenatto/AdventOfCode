@@ -127,7 +127,8 @@ public class Day22Test {
 
 	private void manaSpentToWinIs(int expected) {
 		int actual = strategist.leastManaNeeded();
-		assertThat(strategist.bestWayFound(),actual,equalTo(expected));
+//		assertThat(strategist.bestWayFound(),actual,equalTo(expected));
+		assertThat(actual,equalTo(expected));
 	}
 
 	private void whenFight() {
