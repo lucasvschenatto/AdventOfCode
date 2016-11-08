@@ -65,7 +65,6 @@ public class Battle {
 		current = lastToChange();
 		undoFrom(current);
 		current.spell = current.spell.next();
-		successSpell = true;
 	}
 
 	private void undoFrom(State state) {
